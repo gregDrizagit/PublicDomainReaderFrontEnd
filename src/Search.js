@@ -6,12 +6,12 @@ class Search extends React.Component
   constructor(props)
   {
     super(props)
-    console.log("props in search constructor",props)
     this.state = {
       allBooks:[],
       filteredBooks: [],
+      errors: null,
       query:"",
-      collections: props.user.collections
+      currentUser: props.user
     }
   }
 
@@ -20,12 +20,10 @@ class Search extends React.Component
     const token = localStorage.getItem('token')
     if(token){
        Adapter.getCurrentUser().then(user => {
-         console.log(user)
-          const currentUser = {currentUser: user}
-          this.setState({auth: currentUser})
+          this.setState({currentUser: user})
         })
     }else {
-      this.props.history.push('/')
+      this.props.history.push('/login')
     }
   }
 
@@ -37,12 +35,19 @@ class Search extends React.Component
   searchBooks = (e) =>
   {
     e.preventDefault()
-    Adapter.searchBooks(this.state.query).then(books => this.setState({filteredBooks: books}))
+    Adapter.searchBooks(this.state.query).then(books => {
+      if(books.length > 0)
+      {
+        this.setState({filteredBooks: books})
+      }else{
+        alert(`We didn't find anything for ${this.state.query}`)
+      }
+    })
   }
 
+
   render(){
-    console.log("In Search", this.state)
-    const bookCards = this.state.filteredBooks.map((book) =>{ return <li> <BookCard key={book.id} collections={this.state.collections} book={book} /> </li>})
+    const bookCards = this.state.filteredBooks.map((book)=>{return <li> <BookCard book={book} currentUser={this.state.currentUser} /> </li>})
     return(
       <div>
         <form onSubmit={this.searchBooks}>

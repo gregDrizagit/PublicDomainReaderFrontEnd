@@ -1,11 +1,13 @@
 import React from 'react'
 import Adapter from './adapter'
-
+import CollectionContainer from './CollectionContainer'
 class Home extends React.Component{
   constructor()
   {
     super()
     this.state = {
+        currentUser: null
+
     }
   }
 
@@ -14,24 +16,24 @@ class Home extends React.Component{
     const token = localStorage.getItem('token')
     if(token){
        Adapter.getCurrentUser().then(user => {
-         console.log(user)
-          const currentUser = {currentUser: user}
-          this.setState({auth: currentUser})
+          this.setState({currentUser: user})
         })
     }else {
-      this.props.history.push('/')
+      this.props.history.push('/login')
     }
   }
 
 
   render(){
-    const loggedIn = !!this.props.user.first_name
-    console.log(this.props)
       return(
       <div>
-        <h1>Welcome home, {this.props.user.first_name}</h1>
-        <button onClick={this.props.handleLogout}>{loggedIn ? <p>Log Out</p>:<p>Log In</p>} </button>
         <button onClick={() => this.props.history.push('/search')}>Search</button>
+        {this.state.currentUser === null ? <h1>Loading</h1> :
+          <div>
+            <h1>Hello, {this.state.currentUser.user.first_name}</h1>
+            <CollectionContainer collections={this.state.currentUser.user.collections} />
+          </div>
+        }
       </div>
     )
   }

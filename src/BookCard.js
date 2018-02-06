@@ -1,5 +1,6 @@
 import React from 'react'
 import Adapter from './adapter'
+import BookDetail from './BookDetail'
 
 class BookCard extends React.Component
 {
@@ -8,7 +9,8 @@ class BookCard extends React.Component
     super(props)
     this.state = {
       bookId: props.book.id,
-      selectedCollection: props.collections[0]
+      selectedCollection: null,
+      showDetail: false
     }
   }
 
@@ -18,20 +20,16 @@ class BookCard extends React.Component
   }
   selectCollection = (e) =>
   {
+
     this.setState({selectedCollection: e.target.selectedOptions[0].value})
   }
   render(){
-    console.log(this.props.book)
-    const collections = this.props.collections.map((coll) => {return <option name={coll.name} key={coll.id}>{coll.name}</option>})
+    console.log(this.state.selectedCollection)
     return(
       <div>
         <p>{<a key={this.props.book.id} href={this.props.book.html_url}> {this.props.book.title}</a>}</p>
-
-        {this.state.selectedCollection === null ? <p>Select collection</p> : <button onClick={this.addBookToCollection}>Add to Collection</button> }
-
-        <select onSelect={this.selectCollection} >
-          {collections}
-        </select>
+        <button onClick={() => this.setState({showDetail: !this.state.showDetail})}>^</button>
+        {this.state.showDetail ? <BookDetail collections={this.props.currentUser.user.collections} addBookToCollection={this.addBookToCollection} selectCollection={this.selectCollection} />: null}
       </div>
     )
   }
