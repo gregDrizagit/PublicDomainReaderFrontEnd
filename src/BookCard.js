@@ -23,13 +23,22 @@ class BookCard extends React.Component
 
     this.setState({selectedCollection: e.target.selectedOptions[0].value})
   }
+  getHtmlForBook = (html_url) =>
+  {
+    Adapter.getHtmlForBook(html_url).then(book => this.props.setBook(book))
+  }
   render(){
-    console.log(this.state.selectedCollection)
+    console.log(this.props)
     return(
       <div>
-        <p>{<a key={this.props.book.id} href={this.props.book.html_url}> {this.props.book.title}</a>}</p>
-        <button onClick={() => this.setState({showDetail: !this.state.showDetail})}>^</button>
-        {this.state.showDetail ? <BookDetail collections={this.props.currentUser.user.collections} addBookToCollection={this.addBookToCollection} selectCollection={this.selectCollection} />: null}
+        <button onClick={() => {this.getHtmlForBook(this.props.book.html_url)}}>{this.props.book.title}</button>
+        {this.state.showDetail && this.props.currentUser === null ?
+          <div>
+            <BookDetail collections={this.props.currentUser.user.collections} addBookToCollection={this.addBookToCollection} selectCollection={this.selectCollection} />
+            <button onClick={() => this.setState({showDetail: !this.state.showDetail})}>^</button>
+          </div>
+          : null
+        }
       </div>
     )
   }

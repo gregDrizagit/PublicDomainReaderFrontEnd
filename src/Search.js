@@ -47,7 +47,7 @@ class Search extends React.Component
 
 
   render(){
-    const bookCards = this.state.filteredBooks.map((book)=>{return <li> <BookCard book={book} currentUser={this.state.currentUser} /> </li>})
+    const bookCards = this.state.filteredBooks.map((book)=>{return <li> <BookCard book={book} setBook={this.props.setBook} currentUser={this.state.currentUser} /> </li>})
     return(
       <div>
         <form onSubmit={this.searchBooks}>

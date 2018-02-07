@@ -13,7 +13,7 @@ class CollectionContainer extends React.Component
     }
   showCollectionDetail = (coll) =>
   {
-    this.setState({showDetail: !this.state.showDetails, selectedCollection: coll})
+    this.setState({showDetail: !this.state.showDetail, selectedCollection: coll})
   }
 
 
@@ -27,7 +27,7 @@ class CollectionContainer extends React.Component
         <ul>
           {collections}
         </ul>
-        {this.state.showDetail ? <CollectionShow collection={this.state.selectedCollection} /> : null}
+        {this.state.showDetail ? <CollectionShow collection={this.state.selectedCollection} setBook={this.props.setBook} /> : null}
       </div>
     )
   }

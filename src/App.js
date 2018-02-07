@@ -3,7 +3,9 @@ import {BrowserRouter as Router, Route, withRouter, Redirect} from 'react-router
 import Adapter from './adapter'
 import Login from './Login'
 import Home from './Home'
+import Read from './Read'
 import Search from './Search'
+import Nav from './Nav'
 class App extends Component {
 
   constructor()
@@ -12,7 +14,8 @@ class App extends Component {
     this.state = {
       auth:{
         currentUser: {}
-      }
+      },
+      book: ""
     }
   }
 
@@ -43,17 +46,19 @@ class App extends Component {
 
   }
 
+  setBook = (book) =>
+  {
+    this.setState({book: book}, () => this.props.history.push('/read'))
+  }
+
   render() {
     console.log("in app", this.state)
     return (
       <div className="App">
-        <Route exact path="/login"  render={(routerProps) => {return <Login {...routerProps} handleLogin={this.handleLogin} />}}/>
-        <Route exact path="/" render={(routerProps) =>
-          {return <Home {...routerProps} handleLogout={this.handleLogout}
-                        user={this.state.auth.currentUser}
-                        allBooks={this.state.books}/>}}/>
-        <Route exact path="/search" render={(routerProps)=>{return <Search {...routerProps} user={this.state.auth.currentUser} />}} />
-        <Route exact path="/read" render={() => <h1>Read</h1>}/>
+        <Route exact path="/login" render={(routerProps) => {return <Login {...routerProps} handleLogin={this.handleLogin} />}}/>
+        <Route exact path="/" render={(routerProps) => {return <Home {...routerProps} handleLogout={this.handleLogout} user={this.state.auth.currentUser} setBook={this.setBook} allBooks={this.state.books}/> }}/>
+        <Route exact path="/search" render={(routerProps)=>{return <Search {...routerProps} user={this.state.auth.currentUser} setBook={this.setBook} /> }}/>
+        <Route exact path="/read" render={(routerProps) => <Read book={this.state.book}/>}/>
       </div>
     );
   }

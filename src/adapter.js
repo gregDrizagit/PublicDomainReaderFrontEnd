@@ -41,6 +41,16 @@ class Adapter
       body: JSON.stringify({book_id: id, collection: selectedCollection})
     })
   }
+  static getHtmlForBook(url)
+  {
+    return fetch('http://localhost:3000/api/v1/get_book',{
+      method:"POST",
+      headers:{
+        "Content-Type" : "application/json"
+      },
+      body: JSON.stringify({html_url: url})
+    }).then(resp => resp.text())
+  }
 
   static searchBooks(query)
   {
