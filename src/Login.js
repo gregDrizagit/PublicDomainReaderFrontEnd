@@ -7,31 +7,34 @@ class Login extends React.Component{
   {
     super()
     this.state = {
-      errors:false
+      errors:false,
+      username: "",
+      password: ""
     }
   }
 
   handleFormInput = (e) =>
   {
     e.preventDefault()
-    Adapter.authorizeUser(e.target.user_name.value, e.target.password.value)
-    .then(resp => resp.json())
-    .then(user => {
-        if(user.error)
-        {
-          this.setState({errors: true})
-        }else{
-          console.log("our user is:", user)
-          this.props.handleLogin(user)
-          this.props.history.push('/')
+    if(this.state.username != "" && this.state.password != "")
+    {
+      Adapter.authorizeUser(e.target.user_name.value, e.target.password.value)
+      .then(resp => resp.json())
+      .then(user => {
+          if(user.error)
+          {
+            this.setState({errors: true})
+          }else
+          {
+            this.props.handleLogin(user)
+            this.props.history.push('/')
+          }
         }
-      }
-    )
-
+      )
+    }
   }
 
     render(){
-      console.log(this.state)
       return(
         <div>
           {this.state.errors ? <h1>Login failed, please try again</h1>: null}
@@ -43,6 +46,7 @@ class Login extends React.Component{
             </form>
 
           </div>
+
           <div className="signup-form">
             <form>
               <input type="text" name="first_name" placeholder="First Name"/>

@@ -23,7 +23,10 @@ class Read extends React.Component
     console.log(this.state)
     return(
       <div>
-        <h1>This is the drum</h1>
+        <button onClick={() => this.props.history.push('/')}>Collections</button>
+        <button onClick={() => this.props.history.push('/search')}>Search</button>
+
+
         {renderHTML(this.state.book)}
       </div>
     )

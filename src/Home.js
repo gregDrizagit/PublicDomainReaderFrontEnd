@@ -31,7 +31,7 @@ class Home extends React.Component{
         {this.state.currentUser === null ? <h1>Loading</h1> :
           <div>
             <h1>Hello, {this.state.currentUser.user.first_name}</h1>
-            <CollectionContainer collections={this.state.currentUser.user.collections} setBook={this.props.setBook}/>
+            <CollectionContainer collections={this.state.currentUser.user.collections} currentUser={this.state.currentUser} setBook={this.props.setBook}/>
           </div>
         }
       </div>

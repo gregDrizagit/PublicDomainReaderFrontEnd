@@ -10,6 +10,7 @@ class BookCard extends React.Component
     this.state = {
       bookId: props.book.id,
       selectedCollection: null,
+      mountedByCollectionColl: props.mountedByCollectionColl,
       showDetail: false
     }
   }
@@ -27,15 +28,16 @@ class BookCard extends React.Component
   {
     Adapter.getHtmlForBook(html_url).then(book => this.props.setBook(book))
   }
+  
   render(){
     console.log(this.props)
     return(
       <div>
         <button onClick={() => {this.getHtmlForBook(this.props.book.html_url)}}>{this.props.book.title}</button>
-        {this.state.showDetail && this.props.currentUser === null ?
+        {this.state.mountedByCollectionColl ? null : <button onClick={() => this.setState({showDetail: !this.state.showDetail})}>^</button>}
+        {this.state.showDetail ?
           <div>
             <BookDetail collections={this.props.currentUser.user.collections} addBookToCollection={this.addBookToCollection} selectCollection={this.selectCollection} />
-            <button onClick={() => this.setState({showDetail: !this.state.showDetail})}>^</button>
           </div>
           : null
         }

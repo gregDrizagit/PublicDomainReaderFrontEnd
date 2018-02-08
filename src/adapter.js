@@ -41,6 +41,29 @@ class Adapter
       body: JSON.stringify({book_id: id, collection: selectedCollection})
     })
   }
+
+  static getPage(pageNum, results, route)
+  {
+    return fetch(`http://localhost:3000/api/v1/${route}`,{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body: JSON.stringify({page: pageNum, results_per_page: results})
+    }).then(resp => resp.json())
+  }
+  
+  static createNewCollection(collectionName, currentUser)
+  {
+    return fetch("http://localhost:3000/api/v1/new",{
+      method: "POST",
+      headers:{
+        "Content-Type" : "application/json",
+        "Accept" : "application/json"
+      },
+      body: JSON.stringify({collection_name: collectionName, current_user: currentUser })
+    }).then(resp => resp.json())
+  }
   static getHtmlForBook(url)
   {
     return fetch('http://localhost:3000/api/v1/get_book',{

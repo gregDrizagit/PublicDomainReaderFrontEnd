@@ -35,14 +35,22 @@ class Search extends React.Component
   searchBooks = (e) =>
   {
     e.preventDefault()
-    Adapter.searchBooks(this.state.query).then(books => {
-      if(books.length > 0)
-      {
-        this.setState({filteredBooks: books})
-      }else{
-        alert(`We didn't find anything for ${this.state.query}`)
-      }
-    })
+    if(this.state.query !== "")
+    {
+      Adapter.searchBooks(this.state.query).then(books => {
+        if(books.length > 0)
+        {
+          this.setState({filteredBooks: books})
+
+        }else
+        {
+          alert(`We didn't find anything for ${this.state.query}`)
+        }
+      })
+    }else
+    {
+      alert("Please enter a search query")
+    }
   }
 
 
@@ -50,8 +58,9 @@ class Search extends React.Component
     const bookCards = this.state.filteredBooks.map((book)=>{return <li> <BookCard book={book} setBook={this.props.setBook} currentUser={this.state.currentUser} /> </li>})
     return(
       <div>
+        <button onClick={() => this.props.history.push('/')}>Collections</button>
         <form onSubmit={this.searchBooks}>
-          <input type="text" name="search" placeholder="Search for book" onChange={this.handleInputChange} />
+          <input type="text" value={this.state.query} name="search" placeholder="Search for book" onChange={this.handleInputChange} />
           <button type="submit">Search</button>
         </form>
 
