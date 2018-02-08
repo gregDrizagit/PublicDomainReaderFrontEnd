@@ -6,7 +6,7 @@ class AuthorCard extends React.Component
   //We didn't get much data for the author, so we can render his name, birth and death year, and hist list of books
   //I'm thinking that the list of books can maybe exist in a drop down from each author card
   //We will be rendering book cards in the drop down, so we should have all of the same functionality that we would have anywhere else
-  
+
   constructor()
   {
     super()
@@ -19,6 +19,7 @@ class AuthorCard extends React.Component
   {
     return(
       <div>
+        <h1>Author</h1>
 
       </div>
     )

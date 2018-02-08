@@ -25,8 +25,6 @@ class Read extends React.Component
       <div>
         <button onClick={() => this.props.history.push('/')}>Collections</button>
         <button onClick={() => this.props.history.push('/search')}>Search</button>
-
-
         {renderHTML(this.state.book)}
       </div>
     )

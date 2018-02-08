@@ -28,9 +28,8 @@ class BookCard extends React.Component
   {
     Adapter.getHtmlForBook(html_url).then(book => this.props.setBook(book))
   }
-  
+
   render(){
-    console.log(this.props)
     return(
       <div>
         <button onClick={() => {this.getHtmlForBook(this.props.book.html_url)}}>{this.props.book.title}</button>
