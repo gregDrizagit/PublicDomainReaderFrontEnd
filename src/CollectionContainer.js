@@ -1,6 +1,10 @@
 import React from 'react'
 import CollectionShow from './CollectionShow'
+import CollectionCard from './CollectionCard'
+
 import Adapter from './adapter'
+import { Grid, Image, Button, Segment, Container, Input, Icon } from 'semantic-ui-react'
+
 class CollectionContainer extends React.Component
 {
     ///here we will render all our collections
@@ -16,7 +20,7 @@ class CollectionContainer extends React.Component
     }
   showCollectionDetail = (coll) =>
   {
-    this.setState({showDetail: !this.state.showDetail, selectedCollection: coll})
+    // this.setState({showDetail: !this.state.showDetail, selectedCollection: coll})
   }
 
   userHasCollection = (collectionName, collections) =>
@@ -52,21 +56,22 @@ class CollectionContainer extends React.Component
 
   render()
   {
-    const collections = this.props.collections.map((coll) => {return <li>{coll.name} <button onClick={()=>this.showCollectionDetail(coll)}></button></li> })
+     const collections = this.props.collections.map((coll) => {return <CollectionCard collection={coll} setBook={this.props.setBook} showDetail={this.showCollectionDetail(coll)} />})
 
     return(
       <div>
-      <button onClick={() => {this.showNewCollectionForm()}}>New Collection</button>
+      <Button icon="plus" onClick={() => {this.showNewCollectionForm()}} />
+
       {this.state.newCollectionForm ?
         <form onSubmit={this.submitNewCollection}>
-          <input type="text" value={this.state.newCollectionName} onChange={(e)=>this.setState({newCollectionName: e.target.value})} placeholder="New Collection Name"></input>
-          <button>Submit</button>
+          <Input type="text" value={this.state.newCollectionName} onChange={(e)=>this.setState({newCollectionName: e.target.value})} placeholder="New Collection Name" />
+          <Button>Submit</Button>
         </form>
         : null}
       <h4>Your collections:</h4>
-        <ul>
+        <div className="ui link cards">
           {collections}
-        </ul>
+        </div>
         {this.state.showDetail ? <CollectionShow collection={this.state.selectedCollection} setBook={this.props.setBook} /> : null}
       </div>
     )

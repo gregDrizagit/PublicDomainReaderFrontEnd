@@ -1,6 +1,9 @@
 import React from 'react'
 import Adapter from './adapter'
 import BookCard from './BookCard'
+import { Grid, Image, Button, Segment, Input, Container } from 'semantic-ui-react'
+
+
 class Search extends React.Component
 {
   constructor(props)
@@ -55,19 +58,20 @@ class Search extends React.Component
 
 
   render(){
-    const bookCards = this.state.filteredBooks.map((book)=>{return <li> <BookCard book={book} setBook={this.props.setBook} currentUser={this.state.currentUser} /> </li>})
+    const bookCards = this.state.filteredBooks.map((book)=>{return <BookCard book={book} setBook={this.props.setBook} currentUser={this.state.currentUser} />})
     return(
-      <div>
-        <button onClick={() => this.props.history.push('/')}>Collections</button>
+      <Container>
+        <Segment>
+        <Button onClick={() => this.props.history.push('/')}>Collections</Button>
         <form onSubmit={this.searchBooks}>
-          <input type="text" value={this.state.query} name="search" placeholder="Search for book" onChange={this.handleInputChange} />
-          <button type="submit">Search</button>
+          <Input type="text" value={this.state.query} name="search" placeholder="Search for book" onChange={this.handleInputChange} />
+          <Button type="submit">Search</Button>
         </form>
-
-        <ul>
-          {bookCards}
-        </ul>
-      </div>
+        </Segment>
+        <Segment>
+            {bookCards}
+        </Segment>
+      </Container>
     )
   }
 }

@@ -1,6 +1,9 @@
 import React from 'react'
 import Adapter from './adapter'
 import CollectionContainer from './CollectionContainer'
+import { Grid, Image, Button, Segment, Container } from 'semantic-ui-react'
+
+
 class Home extends React.Component{
   constructor()
   {
@@ -25,17 +28,22 @@ class Home extends React.Component{
 
 
   render(){
-      return(
-      <div>
-        <button onClick={() => this.props.history.push('/search')}>Search</button>
-        {this.state.currentUser === null ? <h1>Loading</h1> :
-          <div>
-            <h1>Hello, {this.state.currentUser.user.first_name}</h1>
-            <CollectionContainer collections={this.state.currentUser.user.collections} currentUser={this.state.currentUser} setBook={this.props.setBook}/>
-          </div>
-        }
-      </div>
+    return(
+        <Segment raised>
+          <Button onClick={() => this.props.history.push('/search')}>Search</Button>
+            {this.state.currentUser === null ? <h1>Loading</h1> :
+              <Container>
+              <div>
+                <h1>Hello, {this.state.currentUser.user.first_name}</h1>
+                <CollectionContainer collections={this.state.currentUser.user.collections} currentUser={this.state.currentUser} setBook={this.props.setBook}/>
+              </div>
+              </Container>
+            }
+        </Segment>
     )
   }
 }
-export default Home
+
+// <div style={{border:"1px solid black", margin:"5px"}} class="ui grid">
+//   <div style={{border:"1px solid black", margin:"5px"}} class="three wide column">
+export default Home;
