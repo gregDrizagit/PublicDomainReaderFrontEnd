@@ -1,5 +1,7 @@
 import React from 'react'
 import BookCard from './AuthorCard'
+import {Card, Segment, Dropdown, Menu, Button ,Icon, Image, Label, Loader} from 'semantic-ui-react'
+
 class AuthorCard extends React.Component
 {
   ///Each author card is going to render on click the authors detail
@@ -18,10 +20,17 @@ class AuthorCard extends React.Component
   render()
   {
     return(
-      <div>
-        <h1>Author</h1>
-
-      </div>
+      <Card color='yellow'>
+        <Card.Content>
+          <Card.Header>
+            {this.props.author.name}
+          </Card.Header>
+          <Card.Description>
+          </Card.Description>
+        </Card.Content >
+        <Card.Content extra>
+        </Card.Content>
+      </Card>
     )
   }
 }

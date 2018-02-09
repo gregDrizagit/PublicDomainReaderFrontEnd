@@ -1,7 +1,7 @@
 import React from 'react'
 import Adapter from './adapter'
 import BookCard from './BookCard'
-import { Grid, Image, Button, Segment, Input, Container } from 'semantic-ui-react'
+import { Grid, Image, Button, Segment, Input, Container, Icon, Card, Loader, Dimmer } from 'semantic-ui-react'
 
 
 class Search extends React.Component
@@ -61,16 +61,15 @@ class Search extends React.Component
     const bookCards = this.state.filteredBooks.map((book)=>{return <BookCard book={book} setBook={this.props.setBook} currentUser={this.state.currentUser} />})
     return(
       <Container>
-        <Segment>
-        <Button onClick={() => this.props.history.push('/')}>Collections</Button>
-        <form onSubmit={this.searchBooks}>
-          <Input type="text" value={this.state.query} name="search" placeholder="Search for book" onChange={this.handleInputChange} />
-          <Button type="submit">Search</Button>
-        </form>
-        </Segment>
-        <Segment>
-            {bookCards}
-        </Segment>
+          <Segment color="olive">
+          <form onSubmit={this.searchBooks}>
+            <Input fluid size="huge" type="text" value={this.state.query} name="search" placeholder="Search for book" onChange={this.handleInputChange} />
+            <Button icon="search" type="submit" />
+          </form>
+          </Segment >
+            <Card.Group centered itemsPerRow={4}>
+              {this.state.filteredBooks.length > 0 ? bookCards : <Segment><Dimmer><Loader >We need to get the books</Loader></Dimmer></Segment>}
+            </Card.Group>
       </Container>
     )
   }

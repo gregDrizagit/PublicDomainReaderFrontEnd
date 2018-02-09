@@ -1,7 +1,16 @@
 import React from 'react'
 import Adapter from './adapter'
 import BookDetail from './BookDetail'
-import {Card, Segment, Dropdown, Menu, Button ,Icon} from 'semantic-ui-react'
+import {Card, Segment, Dropdown, Menu, Button ,Icon, Image, Label, Loader} from 'semantic-ui-react'
+import cover1 from './images/cover-1.jpg'
+import cover2 from './images/cover-2.jpg'
+import cover3 from './images/cover-3.jpg'
+import cover4 from './images/cover-4.jpg'
+import cover5 from './images/cover-5.jpg'
+
+
+
+
 class BookCard extends React.Component
 {
   constructor(props)
@@ -25,9 +34,22 @@ class BookCard extends React.Component
     {
        Adapter.postBookToCollection(this.state.bookId, this.state.selectedCollection)
     }
-
+  }
+  modifyImgUrl = (img_url) =>
+  {
+    if(img_url !== "No Image")
+    {
+      return img_url.replace(/small/i, 'medium');
+    }else
+    {
+      console.log("Went in here")
+      const covers = [cover1, cover2, cover3, cover4, cover5]
+      return covers[Math.floor(Math.random() * Math.floor(covers.length))]
+    }
+    // require(`/assets/images/cover-${Math.floor(Math.random() * Math.floor(5) + 1)}.jpg`)
 
   }
+
   selectCollection = (e, data) =>
   {
     console.log(data);
@@ -47,10 +69,10 @@ class BookCard extends React.Component
   }
 
   render(){
-    console.log(this.state)
+
     return(
-      <div>
-        <Card>
+        <Card color='yellow'>
+            <Image centered size="small" src={this.modifyImgUrl(this.props.book.img_url)} />
           <Card.Content>
             <Card.Header>
               {this.props.book.title}
@@ -64,7 +86,7 @@ class BookCard extends React.Component
             :
             <div>
               Add to collection:
-              <Segment>
+              <Segment card color="olive">
                  <Dropdown value={this.state.selectedCollection} options={this.props.currentUser.user.collections.map((col)=> ({text: col.name, value: col.name}))}
                            onChange={this.selectCollection}
                  />
@@ -76,7 +98,6 @@ class BookCard extends React.Component
           </Card.Content>
 
         </Card>
-      </div>
     )
   }
 }

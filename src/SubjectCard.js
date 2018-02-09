@@ -1,5 +1,7 @@
 import React from 'react'
 import BookCard from './BookCard'
+import { Grid, Image, Button, Icon, Segment, Card, Container, Input, Menu } from 'semantic-ui-react'
+
 class SubjectCard extends React.Component
 {
   //Like AuthorCard, all SubjectCard is is a collection of BookCards mostly
@@ -13,9 +15,17 @@ class SubjectCard extends React.Component
   }
   render(){
     return(
-      <div>
-
-      </div>
+      <Card color='teal'>
+        <Card.Content>
+          <Card.Header>
+            {this.props.subject.name}
+          </Card.Header>
+          <Card.Description>
+          </Card.Description>
+        </Card.Content >
+        <Card.Content extra>
+        </Card.Content>
+      </Card>
     )
   }
 }
