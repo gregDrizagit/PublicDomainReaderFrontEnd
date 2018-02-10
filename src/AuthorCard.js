@@ -19,6 +19,7 @@ class AuthorCard extends React.Component
 
   render()
   {
+    console.log("Author card", this.props)
     return(
       <Card color='yellow'>
         <Card.Content>
@@ -29,6 +30,7 @@ class AuthorCard extends React.Component
           </Card.Description>
         </Card.Content >
         <Card.Content extra>
+          <Button icon="unhide" onClick={()=>console.log("Read")} />
         </Card.Content>
       </Card>
     )

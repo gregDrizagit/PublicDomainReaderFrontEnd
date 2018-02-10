@@ -24,6 +24,7 @@ class SubjectCard extends React.Component
           </Card.Description>
         </Card.Content >
         <Card.Content extra>
+          {this.props.subject.books.length} books
         </Card.Content>
       </Card>
     )

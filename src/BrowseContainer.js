@@ -3,6 +3,8 @@ import BookCard from './BookCard'
 import AuthorCard from './AuthorCard'
 import SubjectCard from './SubjectCard'
 import { Grid, Image, Button, Icon, Segment, Card, Container, Input, Menu } from 'semantic-ui-react'
+import InfiniteScroll from 'react-simple-infinite-scroll'
+
 
 class BrowseContainer extends React.Component
 {
@@ -12,6 +14,14 @@ class BrowseContainer extends React.Component
     this.state = {
       activeTab: "Authors"
     }
+  }
+
+
+  componentDidMount()
+  {
+    this.props.handlePagination("Authors")
+    this.props.handlePagination("Subjects")
+    this.props.handlePagination("Books")
   }
   handleItemClick = (e, { name }) => {
     this.setState({ activeTab: name })
@@ -44,7 +54,13 @@ class BrowseContainer extends React.Component
 
   renderBookCards = (books) =>
   {
-      // const bookCards = books.map((book) => <BookCard book={book} setBook={this.props.setBook} />)
+     const bookCards = books.map((book) => <BookCard book={book} currentUser={this.props.user} setBook={this.props.setBook} />)
+     return bookCards
+  }
+
+  loadMore = () =>
+  {
+    console.log("load more")
   }
 
 
@@ -65,11 +81,11 @@ class BrowseContainer extends React.Component
           </Menu.Menu>
         </Menu>
           <Segment style={{maxHeight:"700px", overflow: "scroll"}} attached='Bottom'>
-            <Card.Group centered itemsPerRow={4}>
+            <Card.Group itemsPerRow={4}>
               {this.renderMenuContent()}
             </Card.Group>
-          </Segment>
-
+          </Segment><br/>
+          <Button onClick={() => this.props.handlePagination(this.state.activeTab)}>Next Page</Button>
       </div>
     )
   }

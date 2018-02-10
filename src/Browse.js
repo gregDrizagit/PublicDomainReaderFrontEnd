@@ -4,6 +4,8 @@ import BookCard from './BookCard'
 import AuthorCard from './AuthorCard'
 import SubjectCard from './SubjectCard'
 import BrowseContainer from './BrowseContainer'
+import InfiniteScroll from 'react-infinite-scroll-component';
+
 import { Grid, Image, Button, Icon, Segment, Card, Container, Input, Menu } from 'semantic-ui-react'
 
 class Browse extends React.Component
@@ -33,21 +35,21 @@ class Browse extends React.Component
   {
     switch(route)
     {
-      case "book_list":
+      case "Books":
         console.log("went in here")
-        Adapter.getPage(this.state.booksPage, this.state.results, route).then(books => {
+        Adapter.getPage(this.state.booksPage, this.state.results, "book_list").then(books => {
             const joinedBooks = this.state.books.concat(books)
             this.setState({books: joinedBooks, booksPage: this.state.booksPage += 1})
           })
         break;
-      case "author_list":
-        Adapter.getPage(this.state.authorsPage, this.state.results, route).then(authors => {
+      case "Authors":
+        Adapter.getPage(this.state.authorsPage, this.state.results, "author_list").then(authors => {
           const joinedAuthors = this.state.authors.concat(authors)
           this.setState({authors: joinedAuthors, authorsPage: this.state.authorsPage += 1})
         })
         break;
-      case "subject_list":
-        Adapter.getPage(this.state.subjectsPage, this.state.results, route).then(subjects => {
+      case "Subjects":
+        Adapter.getPage(this.state.subjectsPage, this.state.results, "subject_list").then(subjects => {
           const joinedSubject = this.state.subjects.concat(subjects)
           this.setState({subjects: joinedSubject, subjectsPage: this.state.subjectsPage += 1})
         })
@@ -69,16 +71,17 @@ class Browse extends React.Component
 
   handlePagination = (route) =>
   {
+    console.log("dasfdasfd")
     switch(route)
     {
-      case "book_list":
+      case "Books":
         console.log('went in here')
         this.getPages(route)
         break;
-      case "author_list":
+      case "Authors":
         this.getPages(route)
         break;
-      case "subject_list":
+      case "Subjects":
         this.getPages(route)
         break;
     }
@@ -92,8 +95,10 @@ class Browse extends React.Component
         <input type="number" name="results" value={this.state.results} onChange={(e) => this.setState({results: e.target.value})}  min="1" max="50" />
 
         <Container>
+
           <BrowseContainer subjects={this.state.subjects} books={this.state.books}
-                           authors={this.state.authors} handlePagination={this.handlePagination} />
+                           authors={this.state.authors} setBook={this.props.setBook} user={this.props.user}
+                           handlePagination={this.handlePagination} />
         </Container>
       </div>
     )

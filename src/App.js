@@ -19,6 +19,7 @@ class App extends Component {
       },
       book: ""
     }
+
   }
 
   componentDidMount()
@@ -57,6 +58,7 @@ class App extends Component {
     console.log("in app", this.state)
     return (
       <div className="App">
+
         <Route exact path="/login" render={(routerProps) => {return <Login {...routerProps} handleLogin={this.handleLogin} />}}/>
         <Route exact path="/" render={(routerProps) => {return <Home {...routerProps} handleLogout={this.handleLogout} user={this.state.auth.currentUser} setBook={this.setBook} allBooks={this.state.books}/> }}/>
         <Route exact path="/search" render={(routerProps)=>{return <Search {...routerProps} user={this.state.auth.currentUser} setBook={this.setBook} /> }}/>

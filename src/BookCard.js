@@ -92,7 +92,7 @@ class BookCard extends React.Component
                  />
               </Segment>
               <Button icon="save" onClick={this.addBookToCollection} />
-              <Button icon="leanpub" onClick={this.props.setBook} />
+              <Button icon="leanpub" onClick={() => this.getHtmlForBook(this.props.book.html_url)} />
              </div>
             }
           </Card.Content>
