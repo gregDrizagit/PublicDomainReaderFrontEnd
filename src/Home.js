@@ -29,17 +29,18 @@ class Home extends React.Component{
 
   render(){
     return(
+      <Container>
         <Segment raised>
           <Button onClick={() => this.props.history.push('/search')}>Search</Button>
             {this.state.currentUser === null ? <h1>Loading</h1> :
-              <Container>
-              <div>
-                <h1>Hello, {this.state.currentUser.user.first_name}</h1>
-                <CollectionContainer collections={this.state.currentUser.user.collections} currentUser={this.state.currentUser} setBook={this.props.setBook}/>
-              </div>
-              </Container>
+                <div>
+                  <h1>Hello, {this.state.currentUser.user.first_name}</h1>
+                  <CollectionContainer collections={this.state.currentUser.user.collections} currentUser={this.state.currentUser} setBook={this.props.setBook}/>
+                </div>
             }
         </Segment>
+      </Container>
+
     )
   }
 }

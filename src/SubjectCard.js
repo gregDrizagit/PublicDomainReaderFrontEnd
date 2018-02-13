@@ -1,5 +1,6 @@
 import React from 'react'
 import BookCard from './BookCard'
+import CategoryShow from './CategoryShow'
 import { Grid, Image, Button, Icon, Segment, Card, Container, Input, Menu } from 'semantic-ui-react'
 
 class SubjectCard extends React.Component
@@ -24,7 +25,7 @@ class SubjectCard extends React.Component
           </Card.Description>
         </Card.Content >
         <Card.Content extra>
-          {this.props.subject.books.length} books
+          <Button icon="unhide" onClick={() => this.props.showCategory(this.props.subject.id, "subjects")} />
         </Card.Content>
       </Card>
     )

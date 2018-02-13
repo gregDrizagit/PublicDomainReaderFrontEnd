@@ -11,6 +11,11 @@ class Adapter
     })
   }
 
+  static showCategory(id, cat)
+  {
+    return fetch(`http://localhost:3000/api/v1/${cat}/${id}`).then(resp => resp.json())
+  }
+
   static getBooks()
   {
     return fetch(`http://localhost:3000/api/v1/books`,{
@@ -52,7 +57,7 @@ class Adapter
       body: JSON.stringify({page: pageNum, results_per_page: results})
     }).then(resp => resp.json())
   }
-  
+
   static createNewCollection(collectionName, currentUser)
   {
     return fetch("http://localhost:3000/api/v1/new",{
@@ -78,13 +83,25 @@ class Adapter
   static searchBooks(query)
   {
     return fetch('http://localhost:3000/api/v1/search', {
-      method: "post",
+      method: "POST",
       headers:{
         "Content-Type": "application/json",
         "Accept": "application/json"
       },
       body: JSON.stringify({query: query})
 
+    }).then(resp => resp.json())
+  }
+
+  static setBookmark (user_id, book_id, paragraph)
+  {
+    return fetch('http://localhost:3000/api/v1/bookmarks',{
+      method:"POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({user_id: user_id, book_id: book_id, paragraph: paragraph})
     }).then(resp => resp.json())
   }
 

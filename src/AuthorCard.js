@@ -30,7 +30,7 @@ class AuthorCard extends React.Component
           </Card.Description>
         </Card.Content >
         <Card.Content extra>
-          <Button icon="unhide" onClick={()=>console.log("Read")} />
+          <Button icon="unhide" onClick={() => this.props.showCategory(this.props.author.id, "authors")} />
         </Card.Content>
       </Card>
     )

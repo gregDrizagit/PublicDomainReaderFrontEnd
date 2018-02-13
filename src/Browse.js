@@ -4,6 +4,7 @@ import BookCard from './BookCard'
 import AuthorCard from './AuthorCard'
 import SubjectCard from './SubjectCard'
 import BrowseContainer from './BrowseContainer'
+import CategoryShow from './CategoryShow'
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 import { Grid, Image, Button, Icon, Segment, Card, Container, Input, Menu } from 'semantic-ui-react'
@@ -27,7 +28,10 @@ class Browse extends React.Component
       bookCards: [],
 
       results:20,
-      route:""
+      route:"",
+      showCategory: false,
+      categoryToShow: "",
+      categoryId: null
     }
   }
 
@@ -55,6 +59,14 @@ class Browse extends React.Component
         })
         break;
     }
+  }
+
+  showCategory = (id, category) =>
+  {
+    this.setState({showCategory: !this.state.showCategory,
+                  categoryId: id,
+                  categoryToShow: category})
+
   }
 
   componentDidMount()
@@ -88,17 +100,19 @@ class Browse extends React.Component
   }
 
   render(){
-    console.log("state", this.state)
     return(
       <div>
-        <h1>Browse</h1>
-        <input type="number" name="results" value={this.state.results} onChange={(e) => this.setState({results: e.target.value})}  min="1" max="50" />
-
         <Container>
+          {
+            this.state.showCategory ? <CategoryShow id={this.state.categoryId} user={this.props.user} setBook={this.props.setBook} category={this.state.categoryToShow}  /> :
 
-          <BrowseContainer subjects={this.state.subjects} books={this.state.books}
-                           authors={this.state.authors} setBook={this.props.setBook} user={this.props.user}
-                           handlePagination={this.handlePagination} />
+            <BrowseContainer subjects={this.state.subjects} books={this.state.books}
+                             authors={this.state.authors} setBook={this.props.setBook} user={this.props.user}
+                             handlePagination={this.handlePagination}
+                             showCategory={this.showCategory}
+                            />
+
+          }
         </Container>
       </div>
     )

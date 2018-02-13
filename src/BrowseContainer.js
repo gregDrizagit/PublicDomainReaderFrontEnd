@@ -2,7 +2,7 @@ import React from 'react'
 import BookCard from './BookCard'
 import AuthorCard from './AuthorCard'
 import SubjectCard from './SubjectCard'
-import { Grid, Image, Button, Icon, Segment, Card, Container, Input, Menu } from 'semantic-ui-react'
+import { Grid, Image, Button, Icon, Segment, Card, Container, Input, Menu, Modal} from 'semantic-ui-react'
 import InfiniteScroll from 'react-simple-infinite-scroll'
 
 
@@ -42,13 +42,13 @@ class BrowseContainer extends React.Component
 
   renderAuthorCards = (authors) =>
   {
-      const authorCards = authors.map((author) => <AuthorCard author={author} />)
+      const authorCards = authors.map((author) => <AuthorCard showCategory={this.props.showCategory} author={author} />)
       return authorCards
   }
 
   renderSubjectCards = (subjects) =>
   {
-    const subjectCards = subjects.map((subject) => <SubjectCard subject={subject} />)
+    const subjectCards = subjects.map((subject) => <SubjectCard showCategory={this.props.showCategory} subject={subject} />)
     return subjectCards
   }
 
@@ -58,16 +58,10 @@ class BrowseContainer extends React.Component
      return bookCards
   }
 
-  loadMore = () =>
-  {
-    console.log("load more")
-  }
-
 
   render()
   {
     const { activeTab } = this.state
-    console.log("container" ,this.props)
     return(
       <div>
         <Menu attached='top' tabular>

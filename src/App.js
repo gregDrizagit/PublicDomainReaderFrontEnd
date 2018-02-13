@@ -7,6 +7,7 @@ import Read from './Read'
 import Search from './Search'
 import Nav from './Nav'
 import Browse from './Browse'
+import CategoryShow from './CategoryShow'
 
 class App extends Component {
 
@@ -17,7 +18,8 @@ class App extends Component {
       auth:{
         currentUser: {}
       },
-      book: ""
+      book: "",
+      bookId: null
     }
 
   }
@@ -49,9 +51,9 @@ class App extends Component {
 
   }
 
-  setBook = (book) =>
+  setBook = (book_id, book) =>
   {
-    this.setState({book: book}, () => this.props.history.push('/read'))
+    this.setState({book: book, bookId: book_id}, () => this.props.history.push('/read'))
   }
 
   render() {
@@ -62,7 +64,7 @@ class App extends Component {
         <Route exact path="/login" render={(routerProps) => {return <Login {...routerProps} handleLogin={this.handleLogin} />}}/>
         <Route exact path="/" render={(routerProps) => {return <Home {...routerProps} handleLogout={this.handleLogout} user={this.state.auth.currentUser} setBook={this.setBook} allBooks={this.state.books}/> }}/>
         <Route exact path="/search" render={(routerProps)=>{return <Search {...routerProps} user={this.state.auth.currentUser} setBook={this.setBook} /> }}/>
-        <Route exact path="/read" render={(routerProps) => {return <Read {...routerProps} book={this.state.book}/>}}/>
+        <Route exact path="/read" render={(routerProps) => {return <Read {...routerProps} user={this.state.auth.currentUser} bookId={this.state.bookId} book={this.state.book}/>}}/>
         <Route exact path="/browse" render={(routerProps) => {return <Browse {...routerProps} book={this.state.book} user={this.state.auth.currentUser} setBook={this.setBook}/>}}/>
 
       </div>
