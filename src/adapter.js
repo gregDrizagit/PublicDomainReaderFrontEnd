@@ -69,6 +69,19 @@ class Adapter
       body: JSON.stringify({collection_name: collectionName, current_user: currentUser })
     }).then(resp => resp.json())
   }
+
+  static getBookmarksForBook(id)
+  {
+    return fetch(`http://localhost:3000/api/v1/load_bookmark`, {
+      method:"POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept" : "application/json"
+      },
+      body: JSON.stringify({book_id: id})
+    }).then(resp => resp.json())
+  }
+
   static getHtmlForBook(url)
   {
     return fetch('http://localhost:3000/api/v1/get_book',{

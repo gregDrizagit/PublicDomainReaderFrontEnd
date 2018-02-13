@@ -9,7 +9,8 @@ class Read extends React.Component
     console.log("in read")
     super(props)
     this.state = {
-      book: props.book
+      book: props.book,
+      bookmark: null
     }
   }
 
@@ -17,8 +18,17 @@ class Read extends React.Component
   {
     // this.setState({book: this.state.book.replace(/<p>/g, `<p id=12345 onClick={console.log("hello")}>`)})
     window.addEventListener('storage', function(e){ console.log("fjkadsf") })
+    // window.eval(this.injectJavascriptIntoBook(this.state.book))
+    const allPTags = this.injectJavascriptIntoBook()
+    
 
-    window.eval(this.injectJavascriptIntoBook(this.state.book))
+    if(this.props.paragraph)
+    {
+      const paragraph = allPTags[this.props.paragraph]
+      this.setState({bookmark: paragraph})
+      paragraph.style.color = "red"
+      paragraph.scrollIntoView()
+    }
   }
   watchStorage = () =>
   {
@@ -26,9 +36,32 @@ class Read extends React.Component
     debugger
   }
 
-  setBookmark = () =>
+  placeVisualBookmark = (pTag) =>
   {
-    Adapter.setBookmark(this.props.user.user.id, this.props.bookId, 5 )
+    if(this.state.bookmark)
+    {
+      if(pTag.id === this.state.bookmark.id)
+      {
+
+      }
+      else
+      {
+        this.state.bookmark.style.color = "black"
+        pTag.style.color = "red"
+        this.setState({bookmark: pTag})
+      }
+    }else
+    {
+      pTag.style.color = "red"
+      this.setState({bookmark: pTag})
+    }
+  }
+
+  setBookmark = (pTag) =>
+  {
+    this.placeVisualBookmark(pTag)
+    Adapter.setBookmark(this.props.user.user.id, this.props.bookId, parseInt(this.state.bookmark.id))
+    // const bookmarkThis = document.getElementById(this.state.bookmark.id)
   }
 
 
@@ -39,22 +72,12 @@ class Read extends React.Component
 
   injectJavascriptIntoBook = (book) =>
   {
-    const bookWithJavascript =
-    `
-
-    function setBookmark(e)
-    {
-      localStorage.setItem('bookMark', e.target.id)
-    }
     const pTags = document.body.getElementsByTagName('p')
     Object.keys(pTags).forEach(key => {
       pTags[key].setAttribute("id", key)
-      pTags[key].setAttribute("onclick","setBookmark(event)")
+      pTags[key].addEventListener("click", (e) => this.setBookmark(pTags[key]))
     })
-
-
-    `
-    return bookWithJavascript
+    return pTags
   }
 
 // this.danOdeaSpecial(book, book.indexOf("</body>"), 0, bookWithJavascript )

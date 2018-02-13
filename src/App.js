@@ -19,7 +19,8 @@ class App extends Component {
         currentUser: {}
       },
       book: "",
-      bookId: null
+      bookId: null,
+      paragraph: null
     }
 
   }
@@ -53,7 +54,18 @@ class App extends Component {
 
   setBook = (book_id, book) =>
   {
-    this.setState({book: book, bookId: book_id}, () => this.props.history.push('/read'))
+    Adapter.getBookmarksForBook(book_id).then(bookmark => {
+      if(bookmark.errors)
+      {
+        // alert("Click a paragraph to set bookmark")
+        this.setState({book: book, bookId: book_id}, () => this.props.history.push('/read'))
+      }
+      else
+      {
+        this.setState({book: book, bookId: book_id, paragraph: bookmark.paragraph}, () => this.props.history.push('/read'))
+      }
+    })
+
   }
 
   render() {
@@ -64,7 +76,7 @@ class App extends Component {
         <Route exact path="/login" render={(routerProps) => {return <Login {...routerProps} handleLogin={this.handleLogin} />}}/>
         <Route exact path="/" render={(routerProps) => {return <Home {...routerProps} handleLogout={this.handleLogout} user={this.state.auth.currentUser} setBook={this.setBook} allBooks={this.state.books}/> }}/>
         <Route exact path="/search" render={(routerProps)=>{return <Search {...routerProps} user={this.state.auth.currentUser} setBook={this.setBook} /> }}/>
-        <Route exact path="/read" render={(routerProps) => {return <Read {...routerProps} user={this.state.auth.currentUser} bookId={this.state.bookId} book={this.state.book}/>}}/>
+        <Route exact path="/read" render={(routerProps) => {return <Read {...routerProps} user={this.state.auth.currentUser} bookId={this.state.bookId} paragraph={this.state.paragraph} book={this.state.book}/>}}/>
         <Route exact path="/browse" render={(routerProps) => {return <Browse {...routerProps} book={this.state.book} user={this.state.auth.currentUser} setBook={this.setBook}/>}}/>
 
       </div>
