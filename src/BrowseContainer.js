@@ -2,6 +2,7 @@ import React from 'react'
 import BookCard from './BookCard'
 import AuthorCard from './AuthorCard'
 import SubjectCard from './SubjectCard'
+import BookshelfCard from './BookshelfCard'
 import { Grid, Image, Button, Icon, Segment, Card, Container, Input, Menu, Modal} from 'semantic-ui-react'
 import InfiniteScroll from 'react-simple-infinite-scroll'
 
@@ -22,6 +23,7 @@ class BrowseContainer extends React.Component
     this.props.handlePagination("Authors")
     this.props.handlePagination("Subjects")
     this.props.handlePagination("Books")
+    this.props.handlePagination("Bookshelves")
   }
   handleItemClick = (e, { name }) => {
     this.setState({ activeTab: name })
@@ -36,6 +38,8 @@ class BrowseContainer extends React.Component
         return this.renderAuthorCards(this.props.authors)
       case "Books":
         return this.renderBookCards(this.props.books)
+      case "Bookshelves":
+        return this.renderBookshelfCards(this.props.bookshelves)
     }
   }
 
@@ -57,6 +61,11 @@ class BrowseContainer extends React.Component
      const bookCards = books.map((book) => <BookCard book={book} currentUser={this.props.user} setBook={this.props.setBook} />)
      return bookCards
   }
+  renderBookshelfCards = (bookshelves) =>
+  {
+     const bookshelfCards = bookshelves.map((bookshelf) => <BookshelfCard bookshelf={bookshelf} showCategory={this.props.showCategory} currentUser={this.props.user} setBook={this.props.setBook} />)
+     return bookshelfCards
+  }
 
 
   render()
@@ -68,6 +77,8 @@ class BrowseContainer extends React.Component
           <Menu.Item active={activeTab === 'Subjects'} name='Subjects' onClick={this.handleItemClick} />
           <Menu.Item active={activeTab === 'Authors'} name='Authors' onClick={this.handleItemClick} />
           <Menu.Item active={activeTab === 'Books'} name='Books' onClick={this.handleItemClick} />
+          <Menu.Item active={activeTab === 'Bookshelves'} name='Bookshelves' onClick={this.handleItemClick} />
+
           <Menu.Menu position='right'>
             <Menu.Item>
               <Input icon={{ name: 'search', link: true }} placeholder={`Search ${this.state.activeTab}...`} />

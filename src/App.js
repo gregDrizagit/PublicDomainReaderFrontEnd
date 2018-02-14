@@ -18,9 +18,12 @@ class App extends Component {
       auth:{
         currentUser: {}
       },
-      book: "",
-      bookId: null,
-      paragraph: null
+      currentlyReading:{
+        book: "",
+        bookId: null,
+        bookMeta: null,
+        paragraph: null
+      }
     }
 
   }
@@ -30,6 +33,8 @@ class App extends Component {
     const token = localStorage.getItem('token')
     const bookToken = localStorage.getItem("bookToken")
     const bookId = localStorage.getItem("bookId")
+    const bookAuthor = localStorage.getItem("bookAuthor")
+    const bookTitle = localStorage.getItem("bookTitle")
     if(token)
     {
        Adapter.getCurrentUser().then(user => {
@@ -45,10 +50,13 @@ class App extends Component {
       Adapter.getBookmarksForBook(bookId).then(bookmark => {
         if(bookmark.errors)
         {
+          const bookMetaData = {bookId: bookId, bookAuthor: bookAuthor, bookTitle: bookTitle}
+          this.setState({bookId: bookId, currentlyReading: bookMetaData})
         }
         else
         {
-          this.setState({bookId: bookId, paragraph: bookmark.paragraph})
+          const bookMetaData = {bookId: bookId, bookAuthor: bookAuthor, bookTitle: bookTitle}
+          this.setState({bookId: bookId, currentlyReading: bookMetaData, paragraph: bookmark.paragraph})
         }
       })
     }
@@ -69,19 +77,25 @@ class App extends Component {
 
   }
 
-  setBook = (bookId, book, book_url) =>
+  setBook = (bookId, book, bookUrl, bookMeta) =>
   {
-    localStorage.setItem("bookToken", book_url)
+    localStorage.setItem("bookToken", bookUrl)
     localStorage.setItem("bookId", bookId)
+    localStorage.setItem("bookTitle", bookMeta.title)
+    localStorage.setItem("bookAuthor", bookMeta.author.name)
     Adapter.getBookmarksForBook(bookId).then(bookmark => {
       if(bookmark.errors)
       {
         // alert("Click a paragraph to set bookmark")
-        this.setState({book: book, bookId: bookId}, () => this.props.history.push('/read'))
+        const bookMetaData = {bookId: bookId, bookAuthor: bookMeta.bookAuthor, bookTitle: bookMeta.bookTitle}
+
+        this.setState({book: book, bookId: bookId, currentlyReading: bookMetaData}, () => this.props.history.push('/read'))
       }
       else
       {
-        this.setState({book: book, bookId: bookId, paragraph: bookmark.paragraph}, () => this.props.history.push('/read'))
+        const bookMetaData = {bookId: bookId, bookAuthor: bookMeta.bookAuthor, bookTitle: bookMeta.bookTitle, paragraph: bookmark.paragraph}
+
+        this.setState({book: book, currentlyReading: bookMetaData}, () => this.props.history.push('/read'))
       }
     })
 
@@ -93,7 +107,7 @@ class App extends Component {
       <div className="App">
 
         <Route exact path="/login" render={(routerProps) => {return <Login {...routerProps} handleLogin={this.handleLogin} />}}/>
-        <Route exact path="/" render={(routerProps) => {return <Home {...routerProps} handleLogout={this.handleLogout} user={this.state.auth.currentUser} setBook={this.setBook} allBooks={this.state.books}/> }}/>
+        <Route exact path="/" render={(routerProps) => {return <Home {...routerProps} handleLogout={this.handleLogout} user={this.state.auth.currentUser} setBook={this.setBook} currentlyReading={this.state.currentlyReading} allBooks={this.state.books}/> }}/>
         <Route exact path="/search" render={(routerProps)=>{return <Search {...routerProps} user={this.state.auth.currentUser} setBook={this.setBook} /> }}/>
         <Route exact path="/read" render={(routerProps) => {return <Read {...routerProps} user={this.state.auth.currentUser} bookId={this.state.bookId} paragraph={this.state.paragraph} book={this.state.book}/>}}/>
         <Route exact path="/browse" render={(routerProps) => {return <Browse {...routerProps} book={this.state.book} user={this.state.auth.currentUser} setBook={this.setBook}/>}}/>

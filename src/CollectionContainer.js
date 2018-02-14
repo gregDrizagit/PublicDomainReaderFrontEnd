@@ -8,10 +8,11 @@ import { Grid, Image, Button, Segment, Container, Card, Input, Icon } from 'sema
 class CollectionContainer extends React.Component
 {
     ///here we will render all our collections
-    constructor()
+    constructor(props)
     {
-      super()
+      super(props)
       this.state = {
+        collections: props.collections,
         showDetail: false,
         newCollectionForm: false,
         newCollectionName: "",
@@ -35,12 +36,15 @@ class CollectionContainer extends React.Component
     e.preventDefault()
     if(this.state.newCollectionName !== "")
     {
-      if(this.userHasCollection(this.state.newCollectionName, this.props.collections))
+      if(this.userHasCollection(this.state.newCollectionName, this.state.collections))
       {
         alert("User Already has that collection")
       }else
       {
-        Adapter.createNewCollection(this.state.newCollectionName, this.props.currentUser).then(newCollection => {this.props.collections.push(newCollection)})
+        Adapter.createNewCollection(this.state.newCollectionName, this.props.currentUser).then(newCollection => {
+
+            this.setState({collections: [...this.state.collections, newCollection]}, console.log("CollectionContainer", this.state))
+          })
       }
     }else
     {
@@ -56,7 +60,7 @@ class CollectionContainer extends React.Component
 
   render()
   {
-     const collections = this.props.collections.map((coll) => {return <CollectionCard collection={coll} setBook={this.props.setBook} showDetail={this.showCollectionDetail(coll)} /> })
+     const collections = this.state.collections.map((coll) => {return <CollectionCard collection={coll} setBook={this.props.setBook} showDetail={this.showCollectionDetail(coll)} /> })
 
     return(
       <div>
@@ -69,11 +73,9 @@ class CollectionContainer extends React.Component
         </form>
         : null}
       <h4>Your collections:</h4>
-        <Segment style={{maxHeight:"500px", overflow: "scroll"}}>
           <Card.Group itemsPerRow={4}>
             {collections}
           </Card.Group>
-        </Segment>
         {this.state.showDetail ? <CollectionShow collection={this.state.selectedCollection} setBook={this.props.setBook} /> : null}
       </div>
     )

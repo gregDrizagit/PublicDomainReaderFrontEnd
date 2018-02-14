@@ -6,8 +6,9 @@ import SubjectCard from './SubjectCard'
 import BrowseContainer from './BrowseContainer'
 import CategoryShow from './CategoryShow'
 import InfiniteScroll from 'react-infinite-scroll-component';
+import logo from './images/logo.png'
 
-import { Grid, Image, Button, Icon, Segment, Sidebar, Card, Container, Input, Menu } from 'semantic-ui-react'
+import { Grid, Image, Button, Icon, Segment, Sidebar, Header, Card, Container, Input, Menu } from 'semantic-ui-react'
 
 class Browse extends React.Component
 {
@@ -18,6 +19,10 @@ class Browse extends React.Component
       subjectsPage: 1,
       subjects: [],
       subjectCards: [],
+
+      bookshelfPage: 1,
+      bookshelves: [],
+      bookshelfCards: [],
 
       authorsPage:1,
       authors: [],
@@ -57,6 +62,13 @@ class Browse extends React.Component
           this.setState({subjects: joinedSubject, subjectsPage: this.state.subjectsPage += 1})
         })
         break;
+
+      case "Bookshelves":
+        Adapter.getPage(this.state.bookshelfPage, 10, "bookshelf_list").then(bookshelves => {
+          const joinedBookshelves = this.state.bookshelves.concat(bookshelves)
+          this.setState({bookshelves: joinedBookshelves, bookshelfPage: this.state.bookshelfPage += 1})
+        })
+        break;
     }
   }
 
@@ -78,6 +90,7 @@ class Browse extends React.Component
      this.getPages("book_list")
      this.getPages("author_list")
      this.getPages("subject_list")
+     this.getPages("bookshelf_list")
   }
 
   handleRadios = (e) =>
@@ -98,50 +111,33 @@ class Browse extends React.Component
       case "Subjects":
         this.getPages(route)
         break;
+      case "Bookshelves":
+        this.getPages(route)
+        break;
     }
   }
 
   render(){
     return(
-      <div>
-        <Sidebar.Pushable>
-          <Sidebar
-            as={Menu}
-            animation='push'
-            width='thin'
-            direction='top'
-            visible={this.state.sidebar}
-            icon='labeled'
-            horizontal
-            inverted
-          >
-            <Menu.Item onClick={() => this.props.history.push('/')} name='home'>
-              <Icon name='home' />
-              Your Library
-            </Menu.Item>
-            <Menu.Item onClick={() => this.props.history.push('/browse')} name='gamepad'>
-              <Icon name='gamepad' />
-              Browse
-            </Menu.Item>
-            </Sidebar>
-          <Sidebar.Pusher>
-          <Button circular size="massive" icon="bars" onClick={this.toggleVisibility}/>
-            <Container>
-              {
-                this.state.showCategory ? <CategoryShow id={this.state.categoryId} user={this.props.user} setBook={this.props.setBook} category={this.state.categoryToShow}  /> :
+      <Container>
+        <Header>
+          <Image size="massive" src={logo} />
+          <Header.Content>
+            Public Domain Reader
+          </Header.Content>
+        </Header>
+        {
+        this.state.showCategory ? <CategoryShow id={this.state.categoryId} user={this.props.user} setBook={this.props.setBook} category={this.state.categoryToShow}  /> :
 
-                <BrowseContainer subjects={this.state.subjects} books={this.state.books}
-                                 authors={this.state.authors} setBook={this.props.setBook} user={this.props.user}
-                                 handlePagination={this.handlePagination}
-                                 showCategory={this.showCategory}
-                                />
+        <BrowseContainer subjects={this.state.subjects} books={this.state.books}
+                         bookshelves={this.state.bookshelves}
+                          authors={this.state.authors} setBook={this.props.setBook} user={this.props.user}
+                          handlePagination={this.handlePagination}
+                          showCategory={this.showCategory}
+                          />
 
-              }
-            </Container>
-        </Sidebar.Pusher>
-
-      </Sidebar.Pushable>
-      </div>
+        }
+      </Container>
     )
   }
 }

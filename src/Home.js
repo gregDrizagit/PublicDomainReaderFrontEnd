@@ -1,7 +1,9 @@
 import React from 'react'
 import Adapter from './adapter'
 import CollectionContainer from './CollectionContainer'
-import { Grid, Image, Button, Segment, Sidebar, Icon, Container, Menu } from 'semantic-ui-react'
+import logo from './images/logo.png'
+
+import { Grid, Image, Button, Segment, Header, Sidebar, Divider, Icon, Container, Menu, Label } from 'semantic-ui-react'
 
 
 class Home extends React.Component{
@@ -33,39 +35,36 @@ class Home extends React.Component{
 
 
   render(){
-    return(
-      <Sidebar.Pushable>
-        <Sidebar
-          as={Menu}
-          animation='push'
-          width='thin'
-          direction='top'
-          visible={this.state.sidebar}
-          icon='labeled'
-          horizontal
-          inverted
-        >
-          <Menu.Item onClick={() => this.props.history.push('/browse')} name='gamepad'>
-            <Icon name='gamepad' />
-            Browse
-          </Menu.Item>
-          </Sidebar>
-        <Sidebar.Pusher>
-        <Button circular size="massive" icon="bars" onClick={this.toggleVisibility}/>
-
+    if(this.state.currentUser)
+    {
+      return(
         <Container>
-              {this.state.currentUser === null ? <h1>Loading</h1> :
-                  <div>
-                    <h1>Welcome back, {this.state.currentUser.user.first_name}.</h1>
-                    <h2>Browse, collect, and read all 60,000+ books in the public domain.</h2>
-                    <CollectionContainer collections={this.state.currentUser.user.collections} currentUser={this.state.currentUser} setBook={this.props.setBook}/>
-                  </div>
-              }
-        </Container>
-      </Sidebar.Pusher>
-    </Sidebar.Pushable>
+          <Header>
+            <Image size="massive" src={logo} />
+            <Header.Content>
+              Public Domain Reader
+            </Header.Content>
+          </Header>
 
-    )
+
+          <Segment>
+            {this.props.currentlyReading ?
+              <Label as="a" onClick={() => this.props.history.push("/read")} raised ribbon color="olive">
+              <h3>Continue reading "{this.props.currentlyReading.bookTitle}", by {this.props.currentlyReading.bookAuthor}</h3>
+              </Label>
+              :
+              null
+            }
+
+              <CollectionContainer collections={this.state.currentUser.user.collections} currentUser={this.state.currentUser} setBook={this.props.setBook}/>
+          </Segment>
+        </Container>
+      )
+    }else
+    {
+      return(<h1>Loading...</h1>)
+
+    }
   }
 }
 

@@ -19,7 +19,6 @@ class AuthorCard extends React.Component
 
   render()
   {
-    console.log("Author card", this.props)
     return(
       <Card color='yellow'>
         <Card.Content>

@@ -1,7 +1,8 @@
 import React from 'react'
 import BookCard from './BookCard'
 import Adapter from './adapter'
-import { Grid, Image, Button, Icon, Segment, Card, Container, Input, Menu } from 'semantic-ui-react'
+
+import { Grid, Image, Button, Icon, Segment, Loader, Card, Container, Header, Input, Menu } from 'semantic-ui-react'
 
 class CategoryShow extends React.Component
 {
@@ -11,6 +12,7 @@ class CategoryShow extends React.Component
     this.state = {
       category: props.category,
       author: null,
+      bookshelf: null,
       subject: null
     }
   }
@@ -43,6 +45,16 @@ class CategoryShow extends React.Component
                 {bookCards}
               </Card.Group>
               </div>)
+    }else if(this.state.category ==="bookshelves")
+    {
+      const bookCards = this.state.bookshelf.books.map((book) => {return <BookCard key={book.id} currentUser={this.props.user} setBook={this.props.setBook} book={book}/>})
+      return (<div>
+              <h1>{this.state.bookshelf.name}</h1>
+              <h4>{this.state.bookshelf.books.length} books.</h4>
+              <Card.Group itemsPerRow={4}>
+                {bookCards}
+              </Card.Group>
+              </div>)
     }
   }
 
@@ -51,9 +63,12 @@ class CategoryShow extends React.Component
     if(this.state.category === "authors")
     {
      this.setState({author: resp})
-   }else
+   }else if(this.state.category === "subjects")
    {
      this.setState({subject: resp})
+   }else if(this.state.category === "bookshelves")
+   {
+     this.setState({bookshelf: resp})
    }
   }
 
@@ -62,10 +77,12 @@ class CategoryShow extends React.Component
       <Container>
         <Segment>
         {
-          this.state.author || this.state.subject ?
+          this.state.author || this.state.subject || this.state.bookshelf ?
             this.showCategoryData()
           :
-          <h1>Loading...</h1>
+          <Segment textAlign="center">
+            <Loader active inline size='large'>Fetching books...</Loader>
+          </Segment>
         }
         </Segment>
       </Container>

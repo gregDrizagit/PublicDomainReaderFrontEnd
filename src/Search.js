@@ -1,7 +1,9 @@
 import React from 'react'
 import Adapter from './adapter'
 import BookCard from './BookCard'
-import { Grid, Image, Button, Segment, Input, Container, Icon, Card, Loader, Dimmer } from 'semantic-ui-react'
+import logo from './images/logo.png'
+
+import { Grid, Image, Button, Segment, Input, Container, Icon, Card, Loader, Header, Dimmer } from 'semantic-ui-react'
 
 
 class Search extends React.Component
@@ -61,6 +63,12 @@ class Search extends React.Component
     const bookCards = this.state.filteredBooks.map((book)=>{return <BookCard key={book.id} book={book} setBook={this.props.setBook} currentUser={this.state.currentUser} />})
     return(
       <Container>
+        <Header>
+          <Image size="massive" src={logo} />
+          <Header.Content>
+            Public Domain Reader
+          </Header.Content>
+        </Header>
           <Segment color="olive">
           <form onSubmit={this.searchBooks}>
             <Input fluid size="huge" type="text" value={this.state.query} name="search" placeholder="Search for book" onChange={this.handleInputChange} />

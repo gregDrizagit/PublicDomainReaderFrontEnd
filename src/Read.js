@@ -105,6 +105,7 @@ class Read extends React.Component
   injectJavascriptIntoBook = (book) =>
   {
     const pTags = document.body.getElementsByTagName('p')
+    document.body.style.backgroundColor = "white"
 
     Object.keys(pTags).forEach(key => {
       pTags[key].setAttribute("id", key)
@@ -119,37 +120,8 @@ class Read extends React.Component
     {
       return(
         <div>
-          <Sidebar.Pushable>
-            <Sidebar
-              as={Menu}
-              animation='push'
-              width='thin'
-              direction='left'
-              visible={this.state.sidebar}
-              icon='labeled'
-              vertical
-              inverted
-            >
-              <Menu.Item onClick={() => this.props.history.push('/')} name='home'>
-                <Icon name='home' />
-                Your Library
-              </Menu.Item>
-              <Menu.Item onClick={() => this.props.history.push('/browse')} name='gamepad'>
-                <Icon name='gamepad' />
-                Browse
-              </Menu.Item>
-              </Sidebar>
-            <Sidebar.Pusher>
-
-              <Button onClick={this.toggleVisibility}>Toggle Visibility</Button>
-              {renderHTML(this.state.book)}
-
-            </Sidebar.Pusher>
-
-          </Sidebar.Pushable>
-
-          </div>
-
+        {renderHTML(this.state.book)}
+        </div>
       )
 
     }else
