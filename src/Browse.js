@@ -7,7 +7,7 @@ import BrowseContainer from './BrowseContainer'
 import CategoryShow from './CategoryShow'
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-import { Grid, Image, Button, Icon, Segment, Card, Container, Input, Menu } from 'semantic-ui-react'
+import { Grid, Image, Button, Icon, Segment, Sidebar, Card, Container, Input, Menu } from 'semantic-ui-react'
 
 class Browse extends React.Component
 {
@@ -40,7 +40,6 @@ class Browse extends React.Component
     switch(route)
     {
       case "Books":
-        console.log("went in here")
         Adapter.getPage(this.state.booksPage, this.state.results, "book_list").then(books => {
             const joinedBooks = this.state.books.concat(books)
             this.setState({books: joinedBooks, booksPage: this.state.booksPage += 1})
@@ -59,6 +58,11 @@ class Browse extends React.Component
         })
         break;
     }
+  }
+
+  toggleVisibility = () =>
+  {
+    this.setState({sidebar: !this.state.sidebar})
   }
 
   showCategory = (id, category) =>
@@ -83,11 +87,9 @@ class Browse extends React.Component
 
   handlePagination = (route) =>
   {
-    console.log("dasfdasfd")
     switch(route)
     {
       case "Books":
-        console.log('went in here')
         this.getPages(route)
         break;
       case "Authors":
@@ -102,18 +104,43 @@ class Browse extends React.Component
   render(){
     return(
       <div>
-        <Container>
-          {
-            this.state.showCategory ? <CategoryShow id={this.state.categoryId} user={this.props.user} setBook={this.props.setBook} category={this.state.categoryToShow}  /> :
+        <Sidebar.Pushable>
+          <Sidebar
+            as={Menu}
+            animation='push'
+            width='thin'
+            direction='top'
+            visible={this.state.sidebar}
+            icon='labeled'
+            horizontal
+            inverted
+          >
+            <Menu.Item onClick={() => this.props.history.push('/')} name='home'>
+              <Icon name='home' />
+              Your Library
+            </Menu.Item>
+            <Menu.Item onClick={() => this.props.history.push('/browse')} name='gamepad'>
+              <Icon name='gamepad' />
+              Browse
+            </Menu.Item>
+            </Sidebar>
+          <Sidebar.Pusher>
+          <Button circular size="massive" icon="bars" onClick={this.toggleVisibility}/>
+            <Container>
+              {
+                this.state.showCategory ? <CategoryShow id={this.state.categoryId} user={this.props.user} setBook={this.props.setBook} category={this.state.categoryToShow}  /> :
 
-            <BrowseContainer subjects={this.state.subjects} books={this.state.books}
-                             authors={this.state.authors} setBook={this.props.setBook} user={this.props.user}
-                             handlePagination={this.handlePagination}
-                             showCategory={this.showCategory}
-                            />
+                <BrowseContainer subjects={this.state.subjects} books={this.state.books}
+                                 authors={this.state.authors} setBook={this.props.setBook} user={this.props.user}
+                                 handlePagination={this.handlePagination}
+                                 showCategory={this.showCategory}
+                                />
 
-          }
-        </Container>
+              }
+            </Container>
+        </Sidebar.Pusher>
+
+      </Sidebar.Pushable>
       </div>
     )
   }

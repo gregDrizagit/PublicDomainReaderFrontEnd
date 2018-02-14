@@ -3,7 +3,7 @@ import CollectionShow from './CollectionShow'
 import CollectionCard from './CollectionCard'
 
 import Adapter from './adapter'
-import { Grid, Image, Button, Segment, Container, Input, Icon } from 'semantic-ui-react'
+import { Grid, Image, Button, Segment, Container, Card, Input, Icon } from 'semantic-ui-react'
 
 class CollectionContainer extends React.Component
 {
@@ -40,7 +40,7 @@ class CollectionContainer extends React.Component
         alert("User Already has that collection")
       }else
       {
-        Adapter.createNewCollection(this.state.newCollectionName, this.props.currentUser)
+        Adapter.createNewCollection(this.state.newCollectionName, this.props.currentUser).then(newCollection => {this.props.collections.push(newCollection)})
       }
     }else
     {
@@ -56,7 +56,7 @@ class CollectionContainer extends React.Component
 
   render()
   {
-     const collections = this.props.collections.map((coll) => {return <CollectionCard collection={coll} setBook={this.props.setBook} showDetail={this.showCollectionDetail(coll)} />})
+     const collections = this.props.collections.map((coll) => {return <CollectionCard collection={coll} setBook={this.props.setBook} showDetail={this.showCollectionDetail(coll)} /> })
 
     return(
       <div>
@@ -64,14 +64,16 @@ class CollectionContainer extends React.Component
 
       {this.state.newCollectionForm ?
         <form onSubmit={this.submitNewCollection}>
-          <Input type="text" value={this.state.newCollectionName} onChange={(e)=>this.setState({newCollectionName: e.target.value})} placeholder="New Collection Name" />
-          <Button>Submit</Button>
+          <Input type="text" value={this.state.newCollectionName} onChange={(e)=> this.setState({newCollectionName: e.target.value})} placeholder="New Collection Name" />
+          <Button>Add Collection</Button>
         </form>
         : null}
       <h4>Your collections:</h4>
-        <div className="ui link cards">
-          {collections}
-        </div>
+        <Segment style={{maxHeight:"500px", overflow: "scroll"}}>
+          <Card.Group itemsPerRow={4}>
+            {collections}
+          </Card.Group>
+        </Segment>
         {this.state.showDetail ? <CollectionShow collection={this.state.selectedCollection} setBook={this.props.setBook} /> : null}
       </div>
     )

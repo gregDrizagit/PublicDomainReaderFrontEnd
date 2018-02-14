@@ -4,12 +4,10 @@ const CollectionShow = (props) =>
 {
     ///here we will render all our collections
 
-  const books = props.collection.books.map((book) =>{return <li><BookCard book={book} mountedByCollectionColl={true} setBook={props.setBook}/></li> })
+  const books = props.collection.books.map((book) =>{return <BookCard book={book} mountedByCollectionColl={true} setBook={props.setBook}/> })
   return(
     <div>
-      <ul>
         {books}
-      </ul>
     </div>
   )
 }

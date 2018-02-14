@@ -74,7 +74,7 @@ class BrowseContainer extends React.Component
             </Menu.Item>
           </Menu.Menu>
         </Menu>
-          <Segment style={{maxHeight:"700px", overflow: "scroll"}} attached='Bottom'>
+          <Segment style={{maxHeight:"750px", overflow: "scroll"}} attached='Bottom'>
             <Card.Group itemsPerRow={4}>
               {this.renderMenuContent()}
             </Card.Group>

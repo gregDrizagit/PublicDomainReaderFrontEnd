@@ -28,12 +28,29 @@ class App extends Component {
   componentDidMount()
   {
     const token = localStorage.getItem('token')
-    if(token){
+    const bookToken = localStorage.getItem("bookToken")
+    const bookId = localStorage.getItem("bookId")
+    if(token)
+    {
        Adapter.getCurrentUser().then(user => {
          console.log(user)
           const currentUser = {currentUser: user}
           this.setState({auth: currentUser})
         })
+    }
+
+    if(bookToken && bookId)
+    {
+      Adapter.getHtmlForBook(bookToken).then(book => this.setState({book: book}))
+      Adapter.getBookmarksForBook(bookId).then(bookmark => {
+        if(bookmark.errors)
+        {
+        }
+        else
+        {
+          this.setState({bookId: bookId, paragraph: bookmark.paragraph})
+        }
+      })
     }
   }
 
@@ -52,17 +69,19 @@ class App extends Component {
 
   }
 
-  setBook = (book_id, book) =>
+  setBook = (bookId, book, book_url) =>
   {
-    Adapter.getBookmarksForBook(book_id).then(bookmark => {
+    localStorage.setItem("bookToken", book_url)
+    localStorage.setItem("bookId", bookId)
+    Adapter.getBookmarksForBook(bookId).then(bookmark => {
       if(bookmark.errors)
       {
         // alert("Click a paragraph to set bookmark")
-        this.setState({book: book, bookId: book_id}, () => this.props.history.push('/read'))
+        this.setState({book: book, bookId: bookId}, () => this.props.history.push('/read'))
       }
       else
       {
-        this.setState({book: book, bookId: book_id, paragraph: bookmark.paragraph}, () => this.props.history.push('/read'))
+        this.setState({book: book, bookId: bookId, paragraph: bookmark.paragraph}, () => this.props.history.push('/read'))
       }
     })
 

@@ -17,7 +17,7 @@ class CollectionCard extends React.Component
   render(){
     const bookCards = this.props.collection.books.map((book) => {return <BookCard book={book} mountedByCollectionColl={true} setBook={this.props.setBook} />})
     return(
-      <Card>
+      <Card color='olive'>
         <Card.Content>
           <Card.Header>
             {this.props.collection.name}

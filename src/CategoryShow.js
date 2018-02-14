@@ -35,7 +35,7 @@ class CategoryShow extends React.Component
               </div>)
     }else if(this.state.category === "subjects")
     {
-      const bookCards = this.state.subject.books.map((book) => {return <BookCard currentUser={this.props.user} setBook={this.props.setBook} book={book}/>})
+      const bookCards = this.state.subject.books.map((book) => {return <BookCard key={book.id} currentUser={this.props.user} setBook={this.props.setBook} book={book}/>})
       return (<div>
               <h1>{this.state.subject.name}</h1>
               <h4>{this.state.subject.books.length} books.</h4>
@@ -58,7 +58,6 @@ class CategoryShow extends React.Component
   }
 
   render(){
-    console.log(this.state)
     return(
       <Container>
         <Segment>

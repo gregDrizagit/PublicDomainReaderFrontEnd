@@ -42,7 +42,6 @@ class BookCard extends React.Component
       return img_url.replace(/small/i, 'medium');
     }else
     {
-      console.log("Went in here")
       const covers = [cover1, cover2, cover3, cover4, cover5]
       return covers[Math.floor(Math.random() * Math.floor(covers.length))]
     }
@@ -52,13 +51,12 @@ class BookCard extends React.Component
 
   selectCollection = (e, data) =>
   {
-    console.log(data);
-     this.setState({selectedCollection: data.value}, () => console.log("test state",this.state))
+     this.setState({selectedCollection: data.value})
 
   }
   getHtmlForBook = (html_url) =>
   {
-    Adapter.getHtmlForBook(html_url).then(book => this.props.setBook(this.state.bookId, book))
+    Adapter.getHtmlForBook(html_url).then(book => this.props.setBook(this.state.bookId, book, html_url))
   }
   isBookInCollection = () =>
   {

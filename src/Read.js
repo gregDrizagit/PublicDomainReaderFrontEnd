@@ -1,39 +1,72 @@
 import React from 'react'
 import Adapter from './adapter'
 import renderHTML from 'react-render-html';
+import { Sidebar, Segment, Button, Menu, Image, Icon, Container, Header, Sticky } from 'semantic-ui-react'
+
 
 class Read extends React.Component
 {
+
   constructor(props)
   {
-    console.log("in read")
     super(props)
     this.state = {
       book: props.book,
+      sidebar: false ,
       bookmark: null
     }
+
   }
 
   componentDidMount()
   {
-    // this.setState({book: this.state.book.replace(/<p>/g, `<p id=12345 onClick={console.log("hello")}>`)})
-    window.addEventListener('storage', function(e){ console.log("fjkadsf") })
-    // window.eval(this.injectJavascriptIntoBook(this.state.book))
-    const allPTags = this.injectJavascriptIntoBook()
-    
-
-    if(this.props.paragraph)
+    // this.setState({book: this.props.book}, console.log("in did mount", this.state))
+    if(this.state.book)
     {
-      const paragraph = allPTags[this.props.paragraph]
+      const allPTags = this.injectJavascriptIntoBook()
+      if(this.props.paragraph)
+      {
+        const paragraph = allPTags[this.props.paragraph]
+
+        this.setState({bookmark: paragraph})
+        paragraph.style.color = "red"
+        paragraph.scrollIntoView()
+      }
+    }
+
+  }
+
+  runJavascriptOnHtml = (props) =>
+  {
+
+    const allPTags = this.injectJavascriptIntoBook()
+    if(props.paragraph)
+    {
+      const paragraph = allPTags[props.paragraph]
+
       this.setState({bookmark: paragraph})
       paragraph.style.color = "red"
       paragraph.scrollIntoView()
     }
+
   }
-  watchStorage = () =>
+
+  componentWillReceiveProps(nextProps)
   {
-    console.log("change")
-    debugger
+    console.log("RUNNING WILL MOUNT")
+    if(nextProps.book === this.props.book)
+    {
+
+    }else {
+      console.log("nextProps", nextProps)
+      this.setState({book: nextProps.book}, () => this.runJavascriptOnHtml(nextProps))
+
+    }
+  }
+
+  toggleVisibility = () =>
+  {
+    this.setState({sidebar: !this.state.sidebar})
   }
 
   placeVisualBookmark = (pTag) =>
@@ -61,7 +94,6 @@ class Read extends React.Component
   {
     this.placeVisualBookmark(pTag)
     Adapter.setBookmark(this.props.user.user.id, this.props.bookId, parseInt(this.state.bookmark.id))
-    // const bookmarkThis = document.getElementById(this.state.bookmark.id)
   }
 
 
@@ -73,6 +105,7 @@ class Read extends React.Component
   injectJavascriptIntoBook = (book) =>
   {
     const pTags = document.body.getElementsByTagName('p')
+
     Object.keys(pTags).forEach(key => {
       pTags[key].setAttribute("id", key)
       pTags[key].addEventListener("click", (e) => this.setBookmark(pTags[key]))
@@ -80,25 +113,49 @@ class Read extends React.Component
     return pTags
   }
 
-// this.danOdeaSpecial(book, book.indexOf("</body>"), 0, bookWithJavascript )
-  createMarkup = () =>
-  {
-    return {__html: this.state.book};
-  }
-
-
 
   render(){
-    console.log(this.state)
-    return(
-      <div>
-        <button onClick={() => this.props.history.push('/')}>Collections</button>
-        <button onClick={() => this.props.history.push('/search')}>Search</button>
-        <button onClick={() => this.setBookmark()}>Set Bookmark</button>
+    if(this.state.book)
+    {
+      return(
+        <div>
+          <Sidebar.Pushable>
+            <Sidebar
+              as={Menu}
+              animation='push'
+              width='thin'
+              direction='left'
+              visible={this.state.sidebar}
+              icon='labeled'
+              vertical
+              inverted
+            >
+              <Menu.Item onClick={() => this.props.history.push('/')} name='home'>
+                <Icon name='home' />
+                Your Library
+              </Menu.Item>
+              <Menu.Item onClick={() => this.props.history.push('/browse')} name='gamepad'>
+                <Icon name='gamepad' />
+                Browse
+              </Menu.Item>
+              </Sidebar>
+            <Sidebar.Pusher>
 
-        {renderHTML(this.state.book)}
-      </div>
-    )
+              <Button onClick={this.toggleVisibility}>Toggle Visibility</Button>
+              {renderHTML(this.state.book)}
+
+            </Sidebar.Pusher>
+
+          </Sidebar.Pushable>
+
+          </div>
+
+      )
+
+    }else
+    {
+      return(<h1>Loading</h1>)
+    }
   }
 }
 export default Read

@@ -58,7 +58,7 @@ class Search extends React.Component
 
 
   render(){
-    const bookCards = this.state.filteredBooks.map((book)=>{return <BookCard book={book} setBook={this.props.setBook} currentUser={this.state.currentUser} />})
+    const bookCards = this.state.filteredBooks.map((book)=>{return <BookCard key={book.id} book={book} setBook={this.props.setBook} currentUser={this.state.currentUser} />})
     return(
       <Container>
           <Segment color="olive">
@@ -68,7 +68,7 @@ class Search extends React.Component
           </form>
           </Segment >
             <Card.Group centered itemsPerRow={4}>
-              {this.state.filteredBooks.length > 0 ? bookCards : <Segment><Dimmer><Loader >We need to get the books</Loader></Dimmer></Segment>}
+              {this.state.filteredBooks.length > 0 ? bookCards : null}
             </Card.Group>
       </Container>
     )
