@@ -120,12 +120,21 @@ class Browse extends React.Component
   render(){
     return(
       <Container>
-        <Header>
-          <Image size="massive" src={logo} />
+        <Segment basic clearing>
+        <Header floated="left">
+          <Image onClick={() => this.props.history.push("/")} size="massive" src={logo} />
           <Header.Content>
             Public Domain Reader
           </Header.Content>
         </Header>
+
+        <Header floated="right">
+          <div>
+            <Button circular onClick={() => this.props.history.push('/browse')} size="massive" icon="unhide" color="olive" />
+            <Button circular onClick={() => this.props.history.push('/search')} size="massive" icon="search" color="yellow" />
+          </div>
+        </Header>
+        </Segment>
         {
         this.state.showCategory ? <CategoryShow id={this.state.categoryId} user={this.props.user} setBook={this.props.setBook} category={this.state.categoryToShow}  /> :
 

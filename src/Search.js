@@ -62,23 +62,34 @@ class Search extends React.Component
   render(){
     const bookCards = this.state.filteredBooks.map((book)=>{return <BookCard key={book.id} book={book} setBook={this.props.setBook} currentUser={this.state.currentUser} />})
     return(
+      <div>
       <Container>
-        <Header>
-          <Image size="massive" src={logo} />
-          <Header.Content>
-            Public Domain Reader
-          </Header.Content>
-        </Header>
+
+        <Segment basic clearing>
+          <Header as="a" floated="left">
+            <Image onClick={() => this.props.history.push("/")} size="massive" src={logo} />
+            <Header.Content>
+              Public Domain Reader
+            </Header.Content>
+          </Header>
+          <Header as="a" floated="right">
+            <div>
+              <Button circular onClick={() => this.props.history.push('/browse')} size="massive" icon="unhide" color="olive" />
+              <Button circular onClick={() => this.props.history.push('/')} size="massive" icon="home" color="yellow" />
+            </div>
+          </Header>
+        </Segment>
           <Segment color="olive">
-          <form onSubmit={this.searchBooks}>
-            <Input fluid size="huge" type="text" value={this.state.query} name="search" placeholder="Search for book" onChange={this.handleInputChange} />
-            <Button icon="search" type="submit" />
-          </form>
+            <form onSubmit={this.searchBooks}>
+              <Input fluid size="huge" type="text" value={this.state.query} name="search" placeholder="Search for book" onChange={this.handleInputChange} />
+              <Button icon="search" type="submit" />
+            </form>
           </Segment >
-            <Card.Group centered itemsPerRow={4}>
-              {this.state.filteredBooks.length > 0 ? bookCards : null}
-            </Card.Group>
-      </Container>
+          <Card.Group centered itemsPerRow={4}>
+            {this.state.filteredBooks.length > 0 ? bookCards : null}
+          </Card.Group>
+        </Container>
+      </div>
     )
   }
 }

@@ -3,7 +3,7 @@ import Adapter from './adapter'
 import CollectionContainer from './CollectionContainer'
 import logo from './images/logo.png'
 
-import { Grid, Image, Button, Segment, Header, Sidebar, Divider, Icon, Container, Menu, Label } from 'semantic-ui-react'
+import { Grid, Image, Button, Segment, Loader, Header, Sidebar, Divider, Icon, Container, Menu, Label } from 'semantic-ui-react'
 
 
 class Home extends React.Component{
@@ -39,30 +39,41 @@ class Home extends React.Component{
     {
       return(
         <Container>
-          <Header>
-            <Image size="massive" src={logo} />
-            <Header.Content>
-              Public Domain Reader
-            </Header.Content>
-          </Header>
-
-
-          <Segment>
+          <Segment basic clearing>
+            <Header as='h2' floated="left">
+              <Image size="massive" src={logo} />
+              <Header.Content>
+                Public Domain Reader
+              </Header.Content>
+            </Header>
+            <Header floated="right">
+              <div>
+                <Button circular onClick={() => this.props.history.push('/browse')} size="massive" icon="unhide" color="olive" />
+                <Button circular onClick={() => this.props.history.push('/search')} size="massive" icon="search" color="yellow" />
+              </div>
+            </Header>
+          </Segment>
+          <Segment color="yellow" paded piled>
             {this.props.currentlyReading ?
               <Label as="a" onClick={() => this.props.history.push("/read")} raised ribbon color="olive">
-              <h3>Continue reading "{this.props.currentlyReading.bookTitle}", by {this.props.currentlyReading.bookAuthor}</h3>
+                <h3>Continue reading "{this.props.currentlyReading.bookTitle}", by {this.props.currentlyReading.bookAuthor}</h3>
               </Label>
               :
               null
             }
-
-              <CollectionContainer collections={this.state.currentUser.user.collections} currentUser={this.state.currentUser} setBook={this.props.setBook}/>
+            <CollectionContainer collections={this.state.currentUser.user.collections} currentUser={this.state.currentUser} setBook={this.props.setBook}/>
           </Segment>
         </Container>
       )
     }else
     {
-      return(<h1>Loading...</h1>)
+      return(<Container>
+              <Segment>
+                <Segment textAlign="center">
+                  <Loader active inline size='large'/>
+                </Segment>
+              </Segment>
+              </Container>)
 
     }
   }

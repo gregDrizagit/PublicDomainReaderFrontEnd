@@ -1,6 +1,7 @@
 import React from 'react'
 import BookCard from './BookCard'
 import Adapter from './adapter'
+import logo from './images/logo.png'
 
 import { Grid, Image, Button, Icon, Segment, Loader, Card, Container, Header, Input, Menu } from 'semantic-ui-react'
 
