@@ -54,9 +54,13 @@ class BookCard extends React.Component
      this.setState({selectedCollection: data.value})
 
   }
-  getHtmlForBook = (html_url) =>
+  getHtmlForBook = (htmlUrl) =>
   {
-    Adapter.getHtmlForBook(html_url).then(book => this.props.setBook(this.state.bookId, book, html_url, this.props.book))
+    let bookMeta = {bookId: this.state.bookId, htmlUrl: htmlUrl, bookJson: this.props.book}
+    Adapter.getHtmlForBook(htmlUrl).then(book => {
+      bookMeta.bookHtml = book
+      this.props.setBook(bookMeta)
+    })
   }
   isBookInCollection = () =>
   {

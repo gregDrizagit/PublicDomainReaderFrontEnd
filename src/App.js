@@ -19,10 +19,7 @@ class App extends Component {
         currentUser: {}
       },
       currentlyReading:{
-        book: "",
-        bookId: null,
-        bookMeta: null,
-        paragraph: null
+
       }
     }
 
@@ -30,35 +27,40 @@ class App extends Component {
 
   componentDidMount()
   {
+    console.log("did mount")
     const token = localStorage.getItem('token')
     const bookToken = localStorage.getItem("bookToken")
     const bookId = localStorage.getItem("bookId")
     const bookAuthor = localStorage.getItem("bookAuthor")
     const bookTitle = localStorage.getItem("bookTitle")
+    let refreshMetaData = {bookId: bookId, bookAuthor: bookAuthor, bookTitle: bookTitle}
     if(token)
     {
-       Adapter.getCurrentUser().then(user => {
-         console.log(user)
-          const currentUser = {currentUser: user}
-          this.setState({auth: currentUser})
-        })
+     Adapter.getCurrentUser().then(user => {
+        const currentUser = {currentUser: user}
+        this.setState({auth: currentUser})
+      })
     }
-
-    if(bookToken && bookId)
+    if(bookToken && bookId)//if we have the book url and the book Id stored,
     {
-      Adapter.getHtmlForBook(bookToken).then(book => this.setState({book: book}))
-      Adapter.getBookmarksForBook(bookId).then(bookmark => {
+      Adapter.getHtmlForBook(bookToken).then(book => {
+        this.setState({bookHtml: book})
+        console.log("elon music", this.state)
+
+      })
+      Adapter.getBookmarksForBook(bookId).then(bookmark => { //get any bookmarks
+
         if(bookmark.errors)
         {
-          const bookMetaData = {bookId: bookId, bookAuthor: bookAuthor, bookTitle: bookTitle}
-          this.setState({bookId: bookId, currentlyReading: bookMetaData})
+          this.setState({currentlyReading: refreshMetaData})// if no bookmarks come back, set currently reading to hold the author, title, and ID
         }
         else
-        {
-          const bookMetaData = {bookId: bookId, bookAuthor: bookAuthor, bookTitle: bookTitle}
-          this.setState({bookId: bookId, currentlyReading: bookMetaData, paragraph: bookmark.paragraph})
+        { //if we do get a bookmark back, set the bookMetaData, as well as the paragrpah that comes back with the book.
+          refreshMetaData.paragraph = bookmark.paragraph //add the bookmark to the bookMetaData object
+          this.setState({currentlyReading: refreshMetaData})//set it as state
         }
       })
+
     }
   }
 
@@ -74,28 +76,27 @@ class App extends Component {
     this.setState({auth: {}})
     localStorage.removeItem('token')
     this.props.history.push('/login')
-
   }
 
-  setBook = (bookId, book, bookUrl, bookMeta) =>
+  // bookId, book, bookUrl, bookMeta
+  setBook = (book) =>
   {
-    localStorage.setItem("bookToken", bookUrl)
-    localStorage.setItem("bookId", bookId)
-    localStorage.setItem("bookTitle", bookMeta.title)
-    localStorage.setItem("bookAuthor", bookMeta.author.name)
-    Adapter.getBookmarksForBook(bookId).then(bookmark => {
+    localStorage.setItem("bookToken", book.htmlUrl)
+    localStorage.setItem("bookId", book.bookId)
+    localStorage.setItem("bookTitle", book.bookJson.title)
+    localStorage.setItem("bookAuthor", book.bookJson.author.name)
+    let bookMetaData = {bookId: book.bookId, bookAuthor: book.bookJson.author.name, bookTitle: book.bookJson.title}
+
+    Adapter.getBookmarksForBook(book.bookId).then(bookmark => {
       if(bookmark.errors)
       {
-        // alert("Click a paragraph to set bookmark")
-        const bookMetaData = {bookId: bookId, bookAuthor: bookMeta.bookAuthor, bookTitle: bookMeta.bookTitle}
-
-        this.setState({book: book, bookId: bookId, currentlyReading: bookMetaData}, () => this.props.history.push('/read'))
+        this.setState({currentlyReading: bookMetaData}, () => this.props.history.push('/read'))
       }
       else
       {
-        const bookMetaData = {bookId: bookId, bookAuthor: bookMeta.bookAuthor, bookTitle: bookMeta.bookTitle, paragraph: bookmark.paragraph}
+         bookMetaData.paragraph = bookmark.paragraph
 
-        this.setState({book: book, currentlyReading: bookMetaData}, () => this.props.history.push('/read'))
+        this.setState({bookHtml: book.bookHtml, currentlyReading: bookMetaData}, () => this.props.history.push('/read'))
       }
     })
 
@@ -108,9 +109,11 @@ class App extends Component {
 
         <Route exact path="/login" render={(routerProps) => {return <Login {...routerProps} handleLogin={this.handleLogin} />}}/>
         <Route exact path="/" render={(routerProps) => {return <Home {...routerProps} handleLogout={this.handleLogout} user={this.state.auth.currentUser} setBook={this.setBook} currentlyReading={this.state.currentlyReading} allBooks={this.state.books}/> }}/>
+
         <Route exact path="/search" render={(routerProps)=>{return <Search {...routerProps} user={this.state.auth.currentUser} setBook={this.setBook} /> }}/>
-        <Route exact path="/read" render={(routerProps) => {return <Read {...routerProps} user={this.state.auth.currentUser} bookId={this.state.bookId} paragraph={this.state.paragraph} book={this.state.book}/>}}/>
-        <Route exact path="/browse" render={(routerProps) => {return <Browse {...routerProps} book={this.state.book} user={this.state.auth.currentUser} setBook={this.setBook}/>}}/>
+        <Route exact path="/read" render={(routerProps) => {return <Read {...routerProps} user={this.state.auth.currentUser} bookHtml={this.state.bookHtml} currentlyReading={this.state.currentlyReading}/>}}/>
+
+        <Route exact path="/browse" render={(routerProps) => {return <Browse {...routerProps} user={this.state.auth.currentUser} setBook={this.setBook}/>}}/>
 
       </div>
     );

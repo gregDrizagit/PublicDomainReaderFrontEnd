@@ -3,7 +3,7 @@ import Adapter from './adapter'
 import CollectionContainer from './CollectionContainer'
 import logo from './images/logo.png'
 
-import { Grid, Image, Button, Segment, Loader, Header, Sidebar, Divider, Icon, Container, Menu, Label } from 'semantic-ui-react'
+import { Grid, Image, Button, Segment, Loader, Header, Sidebar, Divider, Icon, Container,Popup, Menu, Label } from 'semantic-ui-react'
 
 
 class Home extends React.Component{
@@ -35,6 +35,7 @@ class Home extends React.Component{
 
 
   render(){
+    console.log("home props", this.props)
     if(this.state.currentUser)
     {
       return(

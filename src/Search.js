@@ -67,7 +67,7 @@ class Search extends React.Component
 
         <Segment basic clearing>
           <Header as="a" floated="left">
-            <Image onClick={() => this.props.history.push("/")} size="massive" src={logo} />
+            <Image as="a" onClick={() => this.props.history.push("/")} size="massive" src={logo} />
             <Header.Content>
               Public Domain Reader
             </Header.Content>
@@ -76,6 +76,7 @@ class Search extends React.Component
             <div>
               <Button circular onClick={() => this.props.history.push('/browse')} size="massive" icon="unhide" color="olive" />
               <Button circular onClick={() => this.props.history.push('/')} size="massive" icon="home" color="yellow" />
+
             </div>
           </Header>
         </Segment>

@@ -58,7 +58,7 @@ class BrowseContainer extends React.Component
 
   renderBookCards = (books) =>
   {
-     const bookCards = books.map((book) => <BookCard book={book} currentUser={this.props.user} setBook={this.props.setBook} />)
+     const bookCards = books.map((book) => <BookCard bookJson={book} currentUser={this.props.user} setBook={this.props.setBook} />)
      return bookCards
   }
   renderBookshelfCards = (bookshelves) =>
