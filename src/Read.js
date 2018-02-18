@@ -1,5 +1,6 @@
 import React from 'react'
 import Adapter from './adapter'
+import HtmlHacker from './htmlhacker'
 import renderHTML from 'react-render-html';
 import { Sidebar, Segment, Button, Menu, Image, Icon, Divider, Popup, Container, Header, Sticky, Loader } from 'semantic-ui-react'
 
@@ -27,15 +28,7 @@ class Read extends React.Component
     // this.setState({book: this.props.book}, console.log("in did mount", this.state))
     if(this.state.bookHtml)
     {
-      const allPTags = this.injectJavascriptIntoBook()
-      if(this.props.currentlyReading.paragraph)
-      {
-        const paragraph = allPTags[this.props.currentlyReading.paragraph]
-
-        this.setState({bookmark: paragraph})
-        paragraph.style.color = "red"
-        paragraph.scrollIntoView()
-      }
+       this.runJavascriptOnHtml(this.props)
     }
 
   }
@@ -44,17 +37,8 @@ class Read extends React.Component
 
   runJavascriptOnHtml = (props) =>
   {
-
-    const allPTags = this.injectJavascriptIntoBook(props.bookHtml)
-    if(props.currentlyReading.paragraph)
-    {
-      const paragraph = allPTags[props.currentlyReading.paragraph]
-
-      this.setState({bookmark: paragraph})
-      paragraph.style.color = "red"
-      paragraph.scrollIntoView()
-    }
-
+    const cleanBook = HtmlHacker.stripBook()
+    this.setState({bookHtml: cleanBook}, () => this.injectJavascriptIntoBook(props.bookHtml))
   }
 
   componentWillReceiveProps(nextProps)
@@ -158,12 +142,20 @@ class Read extends React.Component
   {
     const pTags = document.body.getElementsByTagName('p')
     document.body.style.backgroundColor = "white"
-
     Object.keys(pTags).forEach(key => {
       pTags[key].setAttribute("id", key)
       pTags[key].addEventListener("click", (e) => this.setBookmark(pTags[key]))
     })
-    return pTags
+
+    if(this.props.currentlyReading.paragraph)
+    {
+      const paragraph = pTags[this.props.currentlyReading.paragraph]
+      this.setState({bookmark: paragraph})
+      paragraph.style.color = "red"
+      paragraph.scrollIntoView()
+    }
+
+    // return pTags
   }
 
 

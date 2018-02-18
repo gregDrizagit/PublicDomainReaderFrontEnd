@@ -45,7 +45,6 @@ class App extends Component {
     {
       Adapter.getHtmlForBook(bookToken).then(book => {
         this.setState({bookHtml: book})
-        console.log("elon music", this.state)
 
       })
       Adapter.getBookmarksForBook(bookId).then(bookmark => { //get any bookmarks
@@ -103,7 +102,6 @@ class App extends Component {
   }
 
   render() {
-    console.log("in app", this.state)
     return (
       <div className="App">
 
