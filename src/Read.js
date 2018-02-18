@@ -25,7 +25,7 @@ class Read extends React.Component
   componentDidMount()
   {
     // this.setState({book: this.props.book}, console.log("in did mount", this.state))
-    if(this.state.currentlyReading.bookHtml)
+    if(this.state.bookHtml)
     {
       const allPTags = this.injectJavascriptIntoBook()
       if(this.props.currentlyReading.paragraph)
@@ -59,13 +59,9 @@ class Read extends React.Component
 
   componentWillReceiveProps(nextProps)
   {
-
-    console.log("RUNNING WILL MOUNT", nextProps)
-
     if(nextProps.bookHtml === this.props.bookHtml)
     {
     }else {
-      console.log("read next props", nextProps)
       this.setState({bookHtml: nextProps.bookHtml, currentlyReading: nextProps.currentlyReading}, () => this.runJavascriptOnHtml(nextProps))
     }
   }
@@ -173,7 +169,6 @@ class Read extends React.Component
 
   render(){
     const {contextRef } = this.state
-    console.log('read state render', this.state)
     if(this.state.bookHtml)
     {
       return(

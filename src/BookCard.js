@@ -17,7 +17,7 @@ class BookCard extends React.Component
   {
     super(props)
     this.state = {
-      bookId: props.book.id,
+      bookId: props.bookJson.id,
       selectedCollection: null,
       mountedByCollectionColl: props.mountedByCollectionColl,
       showDetail: false
@@ -56,7 +56,7 @@ class BookCard extends React.Component
   }
   getHtmlForBook = (htmlUrl) =>
   {
-    let bookMeta = {bookId: this.state.bookId, htmlUrl: htmlUrl, bookJson: this.props.book}
+    let bookMeta = {bookId: this.state.bookId, htmlUrl: htmlUrl, bookJson: this.props.bookJson}
     Adapter.getHtmlForBook(htmlUrl).then(book => {
       bookMeta.bookHtml = book
       this.props.setBook(bookMeta)
@@ -74,17 +74,17 @@ class BookCard extends React.Component
 
     return(
         <Card color='yellow'>
-            <Image centered size="small" src={this.modifyImgUrl(this.props.book.img_url)} />
+            <Image centered size="small" src={this.modifyImgUrl(this.props.bookJson.img_url)} />
           <Card.Content>
             <Card.Header>
-              {this.props.book.title}
+              {this.props.bookJson.title}
             </Card.Header>
             <Card.Description>
-              by {this.props.book.author.name}
+              by {this.props.bookJson.author.name}
             </Card.Description>
           </Card.Content >
           <Card.Content extra>
-            {this.state.mountedByCollectionColl === true ? <Button icon="leanpub" onClick={() => this.getHtmlForBook(this.props.book.html_url)} />
+            {this.state.mountedByCollectionColl === true ? <Button icon="leanpub" onClick={() => this.getHtmlForBook(this.props.bookJson.html_url)} />
             :
             <div>
               Add to collection:
@@ -94,7 +94,7 @@ class BookCard extends React.Component
                  />
               </Segment>
               <Button icon="save" onClick={this.addBookToCollection} />
-              <Button icon="leanpub" onClick={() => this.getHtmlForBook(this.props.book.html_url)} />
+              <Button icon="leanpub" onClick={() => this.getHtmlForBook(this.props.bookJson.html_url)} />
              </div>
             }
           </Card.Content>
