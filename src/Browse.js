@@ -5,6 +5,7 @@ import AuthorCard from './AuthorCard'
 import SubjectCard from './SubjectCard'
 import BrowseContainer from './BrowseContainer'
 import CategoryShow from './CategoryShow'
+import CategoryModal from './CategoryModal'
 import InfiniteScroll from 'react-infinite-scroll-component';
 import logo from './images/logo.png'
 
@@ -136,7 +137,13 @@ class Browse extends React.Component
         </Header>
         </Segment>
         {
-        this.state.showCategory ? <CategoryShow id={this.state.categoryId} user={this.props.user} setBook={this.props.setBook} category={this.state.categoryToShow}  /> :
+        this.state.showCategory ?
+        <div>
+          <CategoryModal id={this.state.categoryId} user={this.props.user} setBook={this.props.setBook} category={this.state.categoryToShow} />
+        </div>
+        :
+        null
+        }
 
         <BrowseContainer subjects={this.state.subjects} books={this.state.books}
                          bookshelves={this.state.bookshelves}
@@ -145,10 +152,12 @@ class Browse extends React.Component
                           showCategory={this.showCategory}
                           />
 
-        }
+
       </Container>
     )
   }
 }
 
 export default Browse
+
+// <CategoryShow id={this.state.categoryId} user={this.props.user} setBook={this.props.setBook} category={this.state.categoryToShow}  />

@@ -55,7 +55,8 @@ class Home extends React.Component{
             </Header>
           </Segment>
           <Segment color="yellow" paded piled>
-            {this.props.currentlyReading ?
+            {
+              this.props.currentlyReading ?
               <Label as="a" onClick={() => this.props.history.push("/read")} raised ribbon color="olive">
                 <h3>Continue reading "{this.props.currentlyReading.bookTitle}", by {this.props.currentlyReading.bookAuthor}</h3>
               </Label>

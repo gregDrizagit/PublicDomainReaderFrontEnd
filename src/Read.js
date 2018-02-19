@@ -28,14 +28,14 @@ class Read extends React.Component
     // this.setState({book: this.props.book}, console.log("in did mount", this.state))
     if(this.state.bookHtml)
     {
-       this.runJavascriptOnHtml(this.props)
+       this.stripBookAndLabelPTags(this.props)
     }
 
   }
 
   handleContextRef = contextRef => this.setState({ contextRef })
 
-  runJavascriptOnHtml = (props) =>
+  stripBookAndLabelPTags = (props) =>
   {
     const cleanBook = HtmlHacker.stripBook()
     this.setState({bookHtml: cleanBook}, () => this.injectJavascriptIntoBook(props.bookHtml))
@@ -46,7 +46,7 @@ class Read extends React.Component
     if(nextProps.bookHtml === this.props.bookHtml)
     {
     }else {
-      this.setState({bookHtml: nextProps.bookHtml, currentlyReading: nextProps.currentlyReading}, () => this.runJavascriptOnHtml(nextProps))
+      this.setState({bookHtml: nextProps.bookHtml, currentlyReading: nextProps.currentlyReading}, () => this.stripBookAndLabelPTags(nextProps))
     }
   }
 
@@ -91,7 +91,6 @@ class Read extends React.Component
       document.body.style.color = "black"
     }
     this.setState({negative: !this.state.negative})
-
   }
 
   placeVisualBookmark = (pTag) =>
@@ -116,6 +115,8 @@ class Read extends React.Component
 
   pushToRoute = (route) =>
   {
+    document.body.style.margin = ""
+    document.body.style.textAlign = ""
     if(!this.state.negative)
     {
       this.toggleNegative()
@@ -142,6 +143,8 @@ class Read extends React.Component
   {
     const pTags = document.body.getElementsByTagName('p')
     document.body.style.backgroundColor = "white"
+    document.body.style.textAlign = "center"
+    document.body.style.margin = "80px"
     Object.keys(pTags).forEach(key => {
       pTags[key].setAttribute("id", key)
       pTags[key].addEventListener("click", (e) => this.setBookmark(pTags[key]))
@@ -166,16 +169,16 @@ class Read extends React.Component
       return(
         <div ref={this.handleContextRef}>
         <Sticky context={contextRef}>
-          <Button circular basic onClick={() => this.setState({hideNav: !this.state.hideNav})} size="massive" icon="bars" />
+          <Button floated="left" circular basic onClick={() => this.setState({hideNav: !this.state.hideNav})} size="massive" icon="bars" />
           {
             this.state.hideNav ?
             <div>
-                <Button circular onClick={() => this.pushToRoute('/')} size="massive" icon="home" color="olive" />
-                <Button circular onClick={() => this.pushToRoute('/browse')} size="massive" icon="unhide" color="yellow" />
-                <Button circular onClick={() => this.pushToRoute('/search')} size="massive" icon="search" color="olive" />
-                <Button circular onClick={() => this.toggleNegative() } size="large" icon="lightbulb" color="blue" />
-                <Button circular onClick={() => {this.increaseFontSize("increase")}} size="large" icon="plus" color="red" />
-                <Button circular onClick={() => {this.increaseFontSize("decrease")}} size="large" icon="minus" color="red" />
+                <Button floated="left" circular onClick={() => this.pushToRoute('/')} size="massive" icon="home" color="olive" />
+                <Button floated="left" circular onClick={() => this.pushToRoute('/browse')} size="massive" icon="unhide" color="yellow" />
+                <Button floated="left" circular onClick={() => this.pushToRoute('/search')} size="massive" icon="search" color="olive" />
+                <Button floated="left" circular onClick={() => this.toggleNegative() } size="large" icon="lightbulb" color="blue" />
+                <Button floated="left" circular onClick={() => {this.increaseFontSize("increase")}} size="large" icon="plus" color="red" />
+                <Button floated="left" circular onClick={() => {this.increaseFontSize("decrease")}} size="large" icon="minus" color="red" />
             </div>
             :
             null

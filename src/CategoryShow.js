@@ -3,7 +3,7 @@ import BookCard from './BookCard'
 import Adapter from './adapter'
 import logo from './images/logo.png'
 
-import { Grid, Image, Button, Icon, Segment, Loader, Card, Container, Header, Input, Menu } from 'semantic-ui-react'
+import { Grid, Image, Button, Icon, Segment, Loader, Card, Container, Header, Modal, Input, Menu } from 'semantic-ui-react'
 
 class CategoryShow extends React.Component
 {
@@ -27,7 +27,7 @@ class CategoryShow extends React.Component
   {
     if(this.state.category === "authors")
     {
-      const bookCards = this.state.author.books.map((book) => {return <BookCard currentUser={this.props.user} setBook={this.props.setBook} book={book}/>})
+      const bookCards = this.state.author.books.map((book) => {return <BookCard currentUser={this.props.user} setBook={this.props.setBook} bookJson={book}/>})
       return (<div>
                 <h1>{this.state.author.name}</h1>
                 <h2>{this.state.author.birth_year} - {this.state.author.death_year}</h2>
@@ -38,7 +38,7 @@ class CategoryShow extends React.Component
               </div>)
     }else if(this.state.category === "subjects")
     {
-      const bookCards = this.state.subject.books.map((book) => {return <BookCard key={book.id} currentUser={this.props.user} setBook={this.props.setBook} book={book}/>})
+      const bookCards = this.state.subject.books.map((book) => {return <BookCard key={book.id} currentUser={this.props.user} setBook={this.props.setBook} bookJson={book}/>})
       return (<div>
               <h1>{this.state.subject.name}</h1>
               <h4>{this.state.subject.books.length} books.</h4>
@@ -48,7 +48,7 @@ class CategoryShow extends React.Component
               </div>)
     }else if(this.state.category ==="bookshelves")
     {
-      const bookCards = this.state.bookshelf.books.map((book) => {return <BookCard key={book.id} currentUser={this.props.user} setBook={this.props.setBook} book={book}/>})
+      const bookCards = this.state.bookshelf.books.map((book) => {return <BookCard key={book.id} currentUser={this.props.user} setBook={this.props.setBook} bookJson={book}/>})
       return (<div>
               <h1>{this.state.bookshelf.name}</h1>
               <h4>{this.state.bookshelf.books.length} books.</h4>
