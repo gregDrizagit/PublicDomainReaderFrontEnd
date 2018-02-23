@@ -2,7 +2,7 @@ import React from 'react'
 import Adapter from './adapter'
 import CollectionContainer from './CollectionContainer'
 import logo from './images/logo.png'
-
+import NavBar from './NavBar'
 import { Grid, Image, Button, Segment, Loader, Header, Sidebar, Divider, Icon, Container,Popup, Menu, Label } from 'semantic-ui-react'
 
 
@@ -40,20 +40,7 @@ class Home extends React.Component{
     {
       return(
         <Container>
-          <Segment basic clearing>
-            <Header as='h2' floated="left">
-              <Image size="massive" src={logo} />
-              <Header.Content>
-                Public Domain Reader
-              </Header.Content>
-            </Header>
-            <Header floated="right">
-              <div>
-                <Button circular onClick={() => this.props.history.push('/browse')} size="massive" icon="unhide" color="olive" />
-                <Button circular onClick={() => this.props.history.push('/search')} size="massive" icon="search" color="yellow" />
-              </div>
-            </Header>
-          </Segment>
+          <NavBar mountedBy={"home"} history={this.props.history}/>
           <Segment color="yellow" paded piled>
             {
               this.props.currentlyReading ?

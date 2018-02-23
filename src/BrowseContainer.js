@@ -46,8 +46,8 @@ class BrowseContainer extends React.Component
 
   renderAuthorCards = (authors) =>
   {
-      const authorCards = authors.map((author) => <AuthorCard showCategory={this.props.showCategory} author={author} />)
-      return authorCards
+    const authorCards = authors.map((author) => <AuthorCard showCategory={this.props.showCategory} author={author} />)
+    return authorCards
   }
 
   renderSubjectCards = (subjects) =>
@@ -80,9 +80,7 @@ class BrowseContainer extends React.Component
           <Menu.Item active={activeTab === 'Bookshelves'} name='Bookshelves' onClick={this.handleItemClick} />
 
           <Menu.Menu position='right'>
-            <Menu.Item>
-              <Input icon={{ name: 'search', link: true }} placeholder={`Search ${this.state.activeTab}...`} />
-            </Menu.Item>
+
           </Menu.Menu>
         </Menu>
           <Segment style={{maxHeight:"750px", overflow: "scroll"}} attached='Bottom'>

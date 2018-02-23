@@ -7,6 +7,7 @@ import BrowseContainer from './BrowseContainer'
 import CategoryShow from './CategoryShow'
 import CategoryModal from './CategoryModal'
 import InfiniteScroll from 'react-infinite-scroll-component';
+import NavBar from './NavBar'
 import logo from './images/logo.png'
 
 import { Grid, Image, Button, Icon, Segment, Sidebar, Header, Card, Container, Input, Menu } from 'semantic-ui-react'
@@ -121,21 +122,7 @@ class Browse extends React.Component
   render(){
     return(
       <Container>
-        <Segment basic clearing>
-        <Header floated="left">
-          <Image onClick={() => this.props.history.push("/")} size="massive" src={logo} />
-          <Header.Content>
-            Public Domain Reader
-          </Header.Content>
-        </Header>
-
-        <Header floated="right">
-          <div>
-            <Button circular onClick={() => this.props.history.push('/browse')} size="massive" icon="unhide" color="olive" />
-            <Button circular onClick={() => this.props.history.push('/search')} size="massive" icon="search" color="yellow" />
-          </div>
-        </Header>
-        </Segment>
+        <NavBar mountedBy={"browse"} history={this.props.history} />
         {
         this.state.showCategory ?
         <div>

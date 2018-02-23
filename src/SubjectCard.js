@@ -16,7 +16,7 @@ class SubjectCard extends React.Component
   }
   render(){
     return(
-      <Card color='teal'>
+      <Card color='olive'>
         <Card.Content>
           <Card.Header>
             {this.props.subject.name}

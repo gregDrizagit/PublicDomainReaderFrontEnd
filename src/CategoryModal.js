@@ -29,9 +29,9 @@ class CategoryModal extends React.Component
     {
       const bookCards = this.state.author.books.map((book) => {return <BookCard currentUser={this.props.user} setBook={this.props.setBook} bookJson={book}/>})
       return (<div>
-                <Modal.Header>
+                <Modal.Header color="olive">
 
-                  <Segment raised>
+                  <Segment color="olive">
                     <Button icon="remove" onClick={() => this.setState({isOpen: !this.state.isOpen})}/>
                     <h1>
                      {this.state.author.name}
