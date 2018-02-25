@@ -45,8 +45,8 @@ class CollectionContainer extends React.Component
        return collection !== null
      })
      this.setState({collections: newArray})
-
-    Adapter.deleteCollection(id)
+     this.props.deleteLocalCollection(id)
+     Adapter.deleteCollection(id)
   }
 
   submitNewCollection = (e) =>
@@ -61,6 +61,8 @@ class CollectionContainer extends React.Component
       {
         Adapter.createNewCollection(this.state.newCollectionName, this.props.currentUser).then(newCollection => {
             this.setState({collections: [...this.state.collections, newCollection]})
+            this.props.addNewCollection(newCollection)
+            /////We need to add the collection to the user at the highest level
         })
       }
     }else

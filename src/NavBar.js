@@ -4,7 +4,6 @@ import logo from './images/logo.png'
 
   const NavBar = (props) =>
   {
-    console.log(props)
     if(props.mountedBy === "search")
     {
       return(
@@ -17,7 +16,7 @@ import logo from './images/logo.png'
           </Header>
           <Header as="a" floated="right">
             <div>
-              <h2>Welcome back, {props.user.user.first_name}</h2>.
+              {props.user.user ? <h2>Welcome back, {props.user.user.first_name}</h2> : null}
               <Button circular onClick={() => props.history.push('/browse')} size="massive" icon="unhide" color="olive" />
               <Button circular onClick={() => props.history.push('/')} size="massive" icon="home" color="yellow" />
               <Button onClick={() => props.logout()}>Log Out</Button>
@@ -58,8 +57,7 @@ import logo from './images/logo.png'
           </Header>
           <Header as="a" floated="right">
             <div>
-              <h2>Welcome back, {props.user.user.first_name}</h2>.
-
+              {props.user.user ? <h2>Welcome back, {props.user.user.first_name}</h2> : null}
               <Button circular onClick={() => props.history.push('/browse')} size="massive" icon="unhide" color="olive" />
               <Button circular onClick={() => props.history.push('/search')} size="massive" icon="search" color="yellow" />
               <Button onClick={() => props.logout()}>Log Out</Button>

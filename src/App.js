@@ -69,6 +69,38 @@ class App extends Component {
     localStorage.setItem('token', user.token)
   }
 
+  addNewCollection = (newCollection) =>
+  {
+    const dummyUser = {...this.state.auth.currentUser}
+    const updatedCollections = [...this.state.auth.currentUser.user.collections, newCollection]
+    dummyUser.user.collections = updatedCollections
+    const currentUser = {currentUser: dummyUser}
+    this.setState({auth: currentUser})
+  }
+
+
+  deleteLocalCollection = (id) =>
+  {
+    debugger
+    const newCollectionArray = this.state.auth.currentUser.user.collections.map((collection) => {
+      if(collection.id !== id)
+      {
+        return collection
+      }
+      else
+      {
+        return null
+      }
+    }).filter((collection) => {
+      return collection !== null
+    })
+
+    const dummyUser = {...this.state.auth.currentUser}
+    dummyUser.user.collections = newCollectionArray
+    const currentUser = {currentUser: dummyUser}
+    this.setState({auth: currentUser})
+  }
+
   handleLogout = () =>
   {
     this.setState({auth: {}})
@@ -101,11 +133,12 @@ class App extends Component {
   }
 
   render() {
+    console.log(this.state)
     return (
       <div className="App">
 
         <Route exact path="/login" render={(routerProps) => {return <Login {...routerProps} handleLogin={this.handleLogin} />}}/>
-        <Route exact path="/" render={(routerProps) => {return <Home {...routerProps} handleLogout={this.handleLogout} user={this.state.auth.currentUser} setBook={this.setBook} currentlyReading={this.state.currentlyReading} currentlyReadingList={this.state.currentlyReadingList} allBooks={this.state.books} logout={this.handleLogout}/> }}/>
+        <Route exact path="/" render={(routerProps) => {return <Home {...routerProps} handleLogout={this.handleLogout} user={this.state.auth.currentUser} addNewCollection={this.addNewCollection} deleteLocalCollection={this.deleteLocalCollection} setBook={this.setBook} currentlyReading={this.state.currentlyReading} currentlyReadingList={this.state.currentlyReadingList} allBooks={this.state.books} logout={this.handleLogout}/> }}/>
 
         <Route exact path="/search" render={(routerProps)=>{return <Search {...routerProps} user={this.state.auth.currentUser} logout={this.handleLogout} setBook={this.setBook} /> }}/>
         <Route exact path="/read" render={(routerProps) => {return <Read {...routerProps} user={this.state.auth.currentUser} bookHtml={this.state.bookHtml} logout={this.handleLogout} currentlyReading={this.state.currentlyReading}/>}}/>

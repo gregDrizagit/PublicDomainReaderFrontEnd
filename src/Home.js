@@ -51,7 +51,7 @@ class Home extends React.Component{
               :
               null
             }
-            <CollectionContainer collections={this.state.currentUser.user.collections} currentUser={this.state.currentUser} setBook={this.props.setBook}/>
+            <CollectionContainer collections={this.state.currentUser.user.collections} addNewCollection={this.props.addNewCollection} deleteLocalCollection={this.props.deleteLocalCollection} currentUser={this.state.currentUser} setBook={this.props.setBook}/>
           </Segment>
           <Segment>
           <h3>What other people are reading:</h3>

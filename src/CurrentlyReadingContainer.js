@@ -3,7 +3,6 @@ import { Grid, Image, Button, Segment, Loader, Header, Sidebar, Divider, Feed, I
 import UserCard from './UserCard'
   const CurrentlyReadingContainer = (props) =>
   {
-    console.log("currentlyReadingProps", props)
     const userList = props.currentlyReadingList.map(user => <UserCard user={user} /> )
     return (
       <Feed>

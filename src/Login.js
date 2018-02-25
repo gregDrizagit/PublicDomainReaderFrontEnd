@@ -18,7 +18,6 @@ class Login extends React.Component{
 
   handleFormInput = (e) =>
   {
-    console.log(e.target.user_name.value)
     e.preventDefault()
 
       Adapter.authorizeUser(e.target.user_name.value, e.target.password.value)
