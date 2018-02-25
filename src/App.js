@@ -81,7 +81,6 @@ class App extends Component {
 
   deleteLocalCollection = (id) =>
   {
-    debugger
     const newCollectionArray = this.state.auth.currentUser.user.collections.map((collection) => {
       if(collection.id !== id)
       {
