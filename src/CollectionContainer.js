@@ -30,6 +30,24 @@ class CollectionContainer extends React.Component
     const hasCollection = matchingCollections ? true : false
     return hasCollection
   }
+  deleteCollection = (id) =>
+  {
+     const newArray = this.state.collections.map((collection) => {
+       if(collection.id !== id)
+       {
+         return collection
+       }
+       else
+       {
+         return null
+       }
+     }).filter((collection) => {
+       return collection !== null
+     })
+     this.setState({collections: newArray})
+
+    Adapter.deleteCollection(id)
+  }
 
   submitNewCollection = (e) =>
   {
@@ -42,14 +60,12 @@ class CollectionContainer extends React.Component
       }else
       {
         Adapter.createNewCollection(this.state.newCollectionName, this.props.currentUser).then(newCollection => {
-
-            this.setState({collections: [...this.state.collections, newCollection]}, console.log("CollectionContainer", this.state))
-          })
+            this.setState({collections: [...this.state.collections, newCollection]})
+        })
       }
     }else
     {
       alert("Please enter a collection with a name.")
-
     }
   }
 
@@ -60,7 +76,7 @@ class CollectionContainer extends React.Component
 
   render()
   {
-     const collections = this.state.collections.map((coll) => {return <CollectionCard collection={coll} setBook={this.props.setBook} showDetail={this.showCollectionDetail(coll)} /> })
+     const collections = this.state.collections.map((coll) => {return <CollectionCard collection={coll} setBook={this.props.setBook} deleteCollection={this.deleteCollection} showDetail={this.showCollectionDetail(coll)} /> })
 
     return(
       <div>

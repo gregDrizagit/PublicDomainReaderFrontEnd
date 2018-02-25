@@ -1,6 +1,7 @@
 import React from 'react'
 import { Grid, Image, Button, Icon, Segment, Card, Container, Input } from 'semantic-ui-react'
 import BookCard from './BookCard'
+import Adapter from './adapter'
 class CollectionCard extends React.Component
 {
   constructor()
@@ -10,9 +11,6 @@ class CollectionCard extends React.Component
       showBooks: false
     }
   }
-  componentDidMount()
-  {
-  }
 
   render(){
     const bookCards = this.props.collection.books.map((book) => {return <BookCard bookJson={book} mountedByCollectionColl={true} setBook={this.props.setBook} />})
@@ -21,6 +19,7 @@ class CollectionCard extends React.Component
         <Card.Content>
           <Card.Header>
             {this.props.collection.name}
+            <Button basic circular floated="right" size="tiny" icon="delete" onClick={() => this.props.deleteCollection(this.props.collection.id) }/>
           </Card.Header>
           <Card.Description>
             {this.state.showBooks ? bookCards : null}

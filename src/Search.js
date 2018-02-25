@@ -195,7 +195,7 @@ class Search extends React.Component
     return(
       <div>
       <Container>
-        <NavBar mountedBy={"search"} history={this.props.history}/>
+        <NavBar mountedBy={"search"} user={this.props.user} history={this.props.history}/>
           <Segment color="olive">
               <form onSubmit={this.preventDefault}>
                 <Input fluid size="huge" type="text" onInput={this.controlInput} value={this.state.query} name="search" placeholder="Search for book" onChange={this.debounceEvent(this.searchBooks, 1000)} />

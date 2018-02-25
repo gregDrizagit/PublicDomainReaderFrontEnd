@@ -11,6 +11,17 @@ class Adapter
     })
   }
 
+  static deleteCollection(id)
+  {
+    return fetch(`http://localhost:3000/api/v1/collections/${id}`,{
+      method: "delete",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({collection_id: id})
+    })
+  }
+
   static showCategory(id, cat)
   {
     return fetch(`http://localhost:3000/api/v1/${cat}/${id}`).then(resp => resp.json())
@@ -25,6 +36,17 @@ class Adapter
 
     }).then(res => res.json())
   }
+
+  static getCurrentlyReadingForAllUsers()
+  {
+    return fetch(`http://localhost:3000/api/v1/currently_reading`,{
+      headers: {
+        "Content-Type": "application/json"
+      }
+
+    }).then(res => res.json())
+  }
+
   static getCollections()
   {
     return fetch(`http://localhost:3000/api/v1/collections`,{

@@ -3,6 +3,7 @@ import Adapter from './adapter'
 import CollectionContainer from './CollectionContainer'
 import logo from './images/logo.png'
 import NavBar from './NavBar'
+import CurrentlyReadingContainer from './CurrentlyReadingContainer'
 import { Grid, Image, Button, Segment, Loader, Header, Sidebar, Divider, Icon, Container,Popup, Menu, Label } from 'semantic-ui-react'
 
 
@@ -35,12 +36,12 @@ class Home extends React.Component{
 
 
   render(){
-    console.log("home props", this.props)
     if(this.state.currentUser)
     {
       return(
         <Container>
-          <NavBar mountedBy={"home"} history={this.props.history}/>
+          <NavBar mountedBy={"home"} user={this.state.currentUser} logout={this.props.logout} history={this.props.history}/>
+          <Segment.Group>
           <Segment color="yellow" paded piled>
             {
               this.props.currentlyReading ?
@@ -52,6 +53,11 @@ class Home extends React.Component{
             }
             <CollectionContainer collections={this.state.currentUser.user.collections} currentUser={this.state.currentUser} setBook={this.props.setBook}/>
           </Segment>
+          <Segment>
+          <h3>What other people are reading:</h3>
+            <CurrentlyReadingContainer currentlyReadingList={this.props.currentlyReadingList} />
+          </Segment>
+          </Segment.Group>
         </Container>
       )
     }else

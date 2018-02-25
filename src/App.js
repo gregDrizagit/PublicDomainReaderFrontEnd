@@ -18,16 +18,13 @@ class App extends Component {
       auth:{
         currentUser: {}
       },
-      currentlyReading:{
-
-      }
+      currentlyReadingList: []
     }
 
   }
 
   componentDidMount()
   {
-    console.log("did mount")
     const token = localStorage.getItem('token')
     const bookToken = localStorage.getItem("bookToken")
     const bookId = localStorage.getItem("bookId")
@@ -61,6 +58,8 @@ class App extends Component {
       })
 
     }
+
+    Adapter.getCurrentlyReadingForAllUsers().then(allUsers => this.setState({currentlyReadingList: allUsers}))
   }
 
   handleLogin = (user) =>
@@ -106,12 +105,12 @@ class App extends Component {
       <div className="App">
 
         <Route exact path="/login" render={(routerProps) => {return <Login {...routerProps} handleLogin={this.handleLogin} />}}/>
-        <Route exact path="/" render={(routerProps) => {return <Home {...routerProps} handleLogout={this.handleLogout} user={this.state.auth.currentUser} setBook={this.setBook} currentlyReading={this.state.currentlyReading} allBooks={this.state.books}/> }}/>
+        <Route exact path="/" render={(routerProps) => {return <Home {...routerProps} handleLogout={this.handleLogout} user={this.state.auth.currentUser} setBook={this.setBook} currentlyReading={this.state.currentlyReading} currentlyReadingList={this.state.currentlyReadingList} allBooks={this.state.books} logout={this.handleLogout}/> }}/>
 
-        <Route exact path="/search" render={(routerProps)=>{return <Search {...routerProps} user={this.state.auth.currentUser} setBook={this.setBook} /> }}/>
-        <Route exact path="/read" render={(routerProps) => {return <Read {...routerProps} user={this.state.auth.currentUser} bookHtml={this.state.bookHtml} currentlyReading={this.state.currentlyReading}/>}}/>
+        <Route exact path="/search" render={(routerProps)=>{return <Search {...routerProps} user={this.state.auth.currentUser} logout={this.handleLogout} setBook={this.setBook} /> }}/>
+        <Route exact path="/read" render={(routerProps) => {return <Read {...routerProps} user={this.state.auth.currentUser} bookHtml={this.state.bookHtml} logout={this.handleLogout} currentlyReading={this.state.currentlyReading}/>}}/>
 
-        <Route exact path="/browse" render={(routerProps) => {return <Browse {...routerProps} user={this.state.auth.currentUser} setBook={this.setBook}/>}}/>
+        <Route exact path="/browse" render={(routerProps) => {return <Browse {...routerProps} user={this.state.auth.currentUser} logout={this.handleLogout} setBook={this.setBook}/>}}/>
 
       </div>
     );

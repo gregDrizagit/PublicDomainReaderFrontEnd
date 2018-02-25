@@ -122,7 +122,7 @@ class Browse extends React.Component
   render(){
     return(
       <Container>
-        <NavBar mountedBy={"browse"} history={this.props.history} />
+        <NavBar mountedBy={"browse"} user={this.props.user} logout={this.props.logout} history={this.props.history} />
         {
         this.state.showCategory ?
         <div>
