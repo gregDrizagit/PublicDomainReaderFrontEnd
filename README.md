@@ -6,7 +6,7 @@ There is a large amount of data on the web that is accessible, but not necessari
 # Home
 Users land at a home page when they create an account. Here users can create collections of books, view books in their current collections, view the books other users are currently reading, and jump back into the last book they were reading.
 
-![gif](http://www.giphy.com/gifs/8hYOeENBXlxmDzonYs)
+![alt text](https://media.giphy.com/media/8hYOeENBXlxmDzonYs/giphy.gif)
 
 Browse 
 Users can look through pages of all the books in the database or browse by category (subject, author, bookshelf). User's can view all the books in a given category and read or add books to a collection. 
