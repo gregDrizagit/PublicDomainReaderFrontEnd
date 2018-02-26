@@ -7,7 +7,7 @@ There is a large amount of data on the web that is accessible, but not necessari
 Users land at a home page when they create an account. Here users can create collections of books, view books in their current collections, view the books other users are currently reading, and jump back into the last book they were reading.
 
 <figure class="video_container">
-  <iframe src="https://giphy.com/embed/3l5fa8cIvpJjkYe9WE" width="480" height="238" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/3l5fa8cIvpJjkYe9WE">via GIPHY</a></p>
+  <iframe src="https://giphy.com/embed/3l5fa8cIvpJjkYe9WE" width="480" height="238" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
 </figure>
 
 Browse 
