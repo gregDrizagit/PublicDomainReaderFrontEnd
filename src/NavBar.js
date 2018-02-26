@@ -9,7 +9,7 @@ import logo from './images/logo.png'
       return(
         <Segment basic clearing>
           <Header as="a" floated="left">
-            <Image as="a" onClick={() => this.props.history.push("/")} size="massive" src={logo} />
+            <Image as="a" onClick={() => props.history.push("/")} size="massive" src={logo} />
             <Header.Content color="olive">
               Public Domain Reader
             </Header.Content>

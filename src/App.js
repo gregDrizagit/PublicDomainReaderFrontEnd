@@ -119,7 +119,7 @@ class App extends Component {
     Adapter.getBookmarksForBook(book.bookId).then(bookmark => {
       if(bookmark.errors)
       {
-        this.setState({currentlyReading: bookMetaData}, () => this.props.history.push('/read'))
+        this.setState({bookHtml: book.bookHtml, currentlyReading: bookMetaData}, () => this.props.history.push('/read'))
       }
       else
       {
@@ -132,7 +132,6 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state)
     return (
       <div className="App">
 

@@ -12,8 +12,7 @@ class Home extends React.Component{
   {
     super()
     this.state = {
-        currentUser: null
-
+      currentUser: null
     }
   }
 
