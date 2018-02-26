@@ -6,7 +6,7 @@ There is a large amount of data on the web that is accessible, but not necessari
 # Home
 Users land at a home page when they create an account. Here users can create collections of books, view books in their current collections, view the books other users are currently reading, and jump back into the last book they were reading.
 
-![]("https://media.giphy.com/media/PhrQlW6CZmxBn149eC/giphy.gif")
+![]("https://github.com/gregDrizagit/PublicDomainReaderFrontEnd/blob/master/pdr-gif-1.gif")
 
 
 Browse 
