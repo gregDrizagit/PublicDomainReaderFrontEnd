@@ -15,8 +15,14 @@ Viewing books in a collection.
 Browse 
 Users can look through pages of all the books in the database or browse by category (subject, author, bookshelf). User's can view all the books in a given category and read or add books to a collection. 
 
+![](https://github.com/gregDrizagit/PublicDomainReaderFrontEnd/blob/master/pdf-gif-3.gif)
+
+
 Search
 You can quickly search through all categories containing a keywords. You can also filter search results by category. 
+
+![](https://github.com/gregDrizagit/PublicDomainReaderFrontEnd/blob/master/pdr-gif-4.gif)
+
 
 Read 
 Public Domain Reader mounts the books as HTML. This is convenient for a number of reasons. Since Project Gutenberg is largely a voluneer effort, every book is formatted a little differently. We can use some simple Javascript to create consistent format across all books as well as provide the user with some additional controls over the reading experience. Users can bookmark paragraphs, change the size of the text, and read in "night mode". 
