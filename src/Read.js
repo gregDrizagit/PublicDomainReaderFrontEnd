@@ -65,6 +65,10 @@ class Read extends React.Component
       {
         this.setState({sizeIndex: this.state.sizeIndex += 1 })
         Array.from(pTags).forEach(tag => tag.style.fontSize = `${sizes[this.state.sizeIndex]}`)
+        if(this.state.bookmark)
+        {
+          this.state.bookmark.scrollIntoView()
+        }
       }
     }else if(adjustment === "decrease")
     {
@@ -73,6 +77,10 @@ class Read extends React.Component
         this.setState({sizeIndex: this.state.sizeIndex -= 1 })
 
         Array.from(pTags).forEach(tag => tag.style.fontSize = `${sizes[this.state.sizeIndex]}`)
+        if(this.state.bookmark)
+        {
+          this.state.bookmark.scrollIntoView()
+        }
       }
     }
   }

@@ -54,7 +54,8 @@ class Home extends React.Component{
           </Segment>
           <Segment>
           <h3>What other people are reading:</h3>
-            <CurrentlyReadingContainer currentlyReadingList={this.props.currentlyReadingList} />
+
+            <CurrentlyReadingContainer setBook={this.props.setBook} currentlyReadingList={this.props.currentlyReadingList} />
           </Segment>
           </Segment.Group>
         </Container>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Image, Button, Icon, Segment, Card, Container, Input } from 'semantic-ui-react'
+import { Grid, Image, Button, Icon, Segment, Card, Container, Input, Label } from 'semantic-ui-react'
 import BookCard from './BookCard'
 import Adapter from './adapter'
 class CollectionCard extends React.Component
@@ -27,6 +27,7 @@ class CollectionCard extends React.Component
         </Card.Content>
         <Card.Content extra>
           <Button icon="unhide" onClick={() => this.setState({showBooks: !this.state.showBooks})} />
+
         </Card.Content>
       </Card>
     )

@@ -11,18 +11,23 @@ class Login extends React.Component{
     super()
     this.state = {
       errors:false,
-      username: "",
-      password: ""
+      username: "gdriza",
+      password: "123"
     }
   }
 
-  handleFormInput = (e) =>
+  componentDidMount()
   {
-    e.preventDefault()
+    this.submitUser()
+  }
 
-      Adapter.authorizeUser(e.target.user_name.value, e.target.password.value)
+  submitUser = () =>
+  {
+    // e.preventDefault()
+      Adapter.authorizeUser(this.state.username, this.state.password)
       .then(resp => resp.json())
       .then(user => {
+        console.log(user)
           if(user.error)
           {
             this.setState({errors: true})
@@ -51,9 +56,9 @@ class Login extends React.Component{
           <Segment vertical textAlign={"center"} color='olive'>
           {this.state.errors ? <h1>Login failed, please try again</h1>: null}
           <div className="login-form">
-            <form onSubmit={this.handleFormInput}>
-              <Input type="text" name="user_name" placeholder="Username" />
-              <Input type="password" name="password" placeholder="Password" />
+            <form onSubmit={this.submitUser}>
+              <Input type="text" value={this.state.username} name="user_name" placeholder="Username" />
+              <Input type="password" value={this.state.password} name="password" placeholder="Password" />
             <Button icon="sign in" type="submit" />
             </form>
 
