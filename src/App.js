@@ -59,7 +59,7 @@ class App extends Component {
 
     }
 
-    // Adapter.getCurrentlyReadingForAllUsers().then(allUsers => this.setState({currentlyReadingList: allUsers}))
+    Adapter.getCurrentlyReadingForAllUsers().then(allUsers => this.setState({currentlyReadingList: allUsers}))
   }
 
   handleLogin = (user) =>
