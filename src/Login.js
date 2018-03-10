@@ -11,7 +11,7 @@ class Login extends React.Component{
     super()
     this.state = {
       errors:false,
-      username: "jcoltrane",
+      username: "sstitt",
       password: "123"
     }
   }
