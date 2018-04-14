@@ -135,6 +135,8 @@ class Read extends React.Component
     }
   }
 
+ 
+
   setBookmark = (pTag) =>
   {
     this.placeVisualBookmark(pTag)

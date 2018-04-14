@@ -2,7 +2,7 @@ class Adapter
 {
   static authorizeUser(user_name, password)
   {
-    return fetch('https://public-domain-reader.herokuapp.com/api/v1/auth',{
+    return fetch('http://localhost:3000/api/v1/auth',{
       method:"POST",
       headers: {
         "Content-Type": "application/json",
@@ -13,7 +13,7 @@ class Adapter
 
   static deleteCollection(id)
   {
-    return fetch(`https://public-domain-reader.herokuapp.com/api/v1/collections/${id}`,{
+    return fetch(`http://localhost:3000/api/v1/auth'/api/v1/collections/${id}`,{
       method: "delete",
       headers: {
         "Content-Type": "application/json"
@@ -24,12 +24,12 @@ class Adapter
 
   static showCategory(id, cat)
   {
-    return fetch(`https://public-domain-reader.herokuapp.com/api/v1/${cat}/${id}`).then(resp => resp.json())
+    return fetch(`http://localhost:3000/api/v1/${cat}/${id}`).then(resp => resp.json())
   }
 
   static getBooks()
   {
-    return fetch(`https://public-domain-reader.herokuapp.com/api/v1/books`,{
+    return fetch(`http://localhost:3000/api/v1/books`,{
       headers: {
         "Content-Type": "application/json"
       }
@@ -39,7 +39,7 @@ class Adapter
 
   static getCurrentlyReadingForAllUsers()
   {
-    return fetch(`https://public-domain-reader.herokuapp.com/api/v1/currently_reading`,{
+    return fetch(`http://localhost:3000/api/v1/currently_reading`,{
       headers: {
         "Content-Type": "application/json"
       }
@@ -49,7 +49,7 @@ class Adapter
 
   static getCollections()
   {
-    return fetch(`https://public-domain-reader.herokuapp.com/api/v1/collections`,{
+    return fetch(`http://localhost:3000/api/v1/collections`,{
       headers: {
         "Content-Type": "application/json"
       }
@@ -59,7 +59,7 @@ class Adapter
 
   static postBookToCollection(id, selectedCollection)
   {
-    return fetch('https://public-domain-reader.herokuapp.com/api/v1/collections',{
+    return fetch(`http://localhost:3000/api/v1/collections`,{
       method:"POST",
       headers:{
         "Content-Type" : "application/json",
@@ -71,7 +71,7 @@ class Adapter
 
   static getPage(pageNum, results, route)
   {
-    return fetch(`https://public-domain-reader.herokuapp.com/api/v1/${route}`,{
+    return fetch(`http://localhost:3000/api/v1/${route}`,{
       method:"POST",
       headers:{
         "Content-Type":"application/json"
@@ -82,7 +82,7 @@ class Adapter
 
   static createNewCollection(collectionName, currentUser)
   {
-    return fetch("https://public-domain-reader.herokuapp.com/api/v1/new",{
+    return fetch(`http://localhost:3000/api/v1/new`,{
       method: "POST",
       headers:{
         "Content-Type" : "application/json",
@@ -94,7 +94,7 @@ class Adapter
 
   static getBookmarksForBook(id)
   {
-    return fetch(`https://public-domain-reader.herokuapp.com/api/v1/load_bookmark`, {
+    return fetch(`http://localhost:3000/api/v1/load_bookmark`, {
       method:"POST",
       headers: {
         "Content-Type": "application/json",
@@ -106,7 +106,7 @@ class Adapter
 
   static getHtmlForBook(url)
   {
-    return fetch('https://public-domain-reader.herokuapp.com/api/v1/get_book',{
+    return fetch(`http://localhost:3000/api/v1/get_book`,{
       method:"POST",
       headers:{
         "Content-Type" : "application/json"
@@ -117,7 +117,7 @@ class Adapter
 
   static searchBooks(query)
   {
-    return fetch('https://public-domain-reader.herokuapp.com/api/v1/search', {
+    return fetch(`http://localhost:3000/api/v1/search`, {
       method: "POST",
       headers:{
         "Content-Type": "application/json",
@@ -130,7 +130,7 @@ class Adapter
 
   static setBookmark (user_id, book_id, paragraph)
   {
-    return fetch('https://public-domain-reader.herokuapp.com/api/v1/bookmarks',{
+    return fetch(`http://localhost:3000/api/v1/bookmarks`,{
       method:"POST",
       headers: {
         "Content-Type": "application/json",
@@ -143,7 +143,7 @@ class Adapter
   static getCurrentUser() {
     const token = localStorage.getItem('token')
 
-    return fetch(`https://public-domain-reader.herokuapp.com/api/v1/current_user`, {
+    return fetch(`http://localhost:3000/api/v1/current_user`, {
       headers: {
         Authorization: token
       }

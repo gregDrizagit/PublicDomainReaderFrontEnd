@@ -38,6 +38,45 @@ class App extends Component {
         this.setState({auth: currentUser})
       })
     }
+    // if(bookToken && bookId)//if we have the book url and the book Id stored,
+    // {
+    //   Adapter.getHtmlForBook(bookToken).then(book => {
+    //     this.setState({bookHtml: book})
+
+    //   })
+    //   Adapter.getBookmarksForBook(bookId).then(bookmark => { //get any bookmarks
+
+    //     if(bookmark.errors)
+    //     {
+    //       this.setState({currentlyReading: refreshMetaData})// if no bookmarks come back, set currently reading to hold the author, title, and ID
+    //     }
+    //     else
+    //     { //if we do get a bookmark back, set the bookMetaData, as well as the paragrpah that comes back with the book.
+    //       refreshMetaData.paragraph = bookmark.paragraph //add the bookmark to the bookMetaData object
+    //       this.setState({currentlyReading: refreshMetaData})//set it as state
+    //       console.log("paragraph = ", bookmark.paragraph)
+    //     }
+    //   })
+
+    // }
+    this.refreshBookMarks()
+    Adapter.getCurrentlyReadingForAllUsers().then(allUsers => this.setState({currentlyReadingList: allUsers}))
+  }
+
+  refreshBookMarks = () => {
+    const token = localStorage.getItem('token')
+    const bookToken = localStorage.getItem("bookToken")
+    const bookId = localStorage.getItem("bookId")
+    const bookAuthor = localStorage.getItem("bookAuthor")
+    const bookTitle = localStorage.getItem("bookTitle")
+    let refreshMetaData = {bookId: bookId, bookAuthor: bookAuthor, bookTitle: bookTitle}
+    if(token)
+    {
+     Adapter.getCurrentUser().then(user => {
+        const currentUser = {currentUser: user}
+        this.setState({auth: currentUser})
+      })
+    }
     if(bookToken && bookId)//if we have the book url and the book Id stored,
     {
       Adapter.getHtmlForBook(bookToken).then(book => {
@@ -54,12 +93,17 @@ class App extends Component {
         { //if we do get a bookmark back, set the bookMetaData, as well as the paragrpah that comes back with the book.
           refreshMetaData.paragraph = bookmark.paragraph //add the bookmark to the bookMetaData object
           this.setState({currentlyReading: refreshMetaData})//set it as state
+          console.log("paragraph = ", bookmark.paragraph)
         }
       })
 
     }
+  }
 
-    Adapter.getCurrentlyReadingForAllUsers().then(allUsers => this.setState({currentlyReadingList: allUsers}))
+  componentWillReceiveProps(){
+
+    this.refreshBookMarks(); 
+   
   }
 
   handleLogin = (user) =>
