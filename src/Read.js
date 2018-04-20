@@ -2,7 +2,7 @@ import React from 'react'
 import Adapter from './adapter'
 import HtmlHacker from './htmlhacker'
 import renderHTML from 'react-render-html';
-import { Sidebar, Segment, Button, Menu, Image, Icon, Divider, Popup, Container, Header, Sticky, Loader } from 'semantic-ui-react'
+import { Segment, Button, Sticky, Loader } from 'semantic-ui-react'
 
 
 class Read extends React.Component

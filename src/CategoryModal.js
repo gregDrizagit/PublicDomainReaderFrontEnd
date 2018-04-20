@@ -2,7 +2,7 @@ import React from 'react'
 import BookCard from './BookCard'
 import Adapter from './adapter'
 
-import { Grid, Image, Button, Icon, Segment, Modal, Loader, Card, Container, Header, Input, Menu } from 'semantic-ui-react'
+import { Button, Segment, Modal, Loader, Card, Container } from 'semantic-ui-react'
 
 class CategoryModal extends React.Component
 {

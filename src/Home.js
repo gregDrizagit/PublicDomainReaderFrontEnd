@@ -1,10 +1,9 @@
 import React from 'react'
 import Adapter from './adapter'
 import CollectionContainer from './CollectionContainer'
-import logo from './images/logo.png'
 import NavBar from './NavBar'
 import CurrentlyReadingContainer from './CurrentlyReadingContainer'
-import { Grid, Image, Button, Segment, Loader, Header, Sidebar, Divider, Icon, Container,Popup, Menu, Label } from 'semantic-ui-react'
+import {Segment, Loader, Container, Label } from 'semantic-ui-react'
 
 
 class Home extends React.Component{

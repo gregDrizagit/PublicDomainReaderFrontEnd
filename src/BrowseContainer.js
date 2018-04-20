@@ -3,8 +3,7 @@ import BookCard from './BookCard'
 import AuthorCard from './AuthorCard'
 import SubjectCard from './SubjectCard'
 import BookshelfCard from './BookshelfCard'
-import { Grid, Image, Button, Icon, Segment, Card, Container, Input, Menu, Modal} from 'semantic-ui-react'
-import InfiniteScroll from 'react-simple-infinite-scroll'
+import { Button, Segment, Card, Menu, } from 'semantic-ui-react'
 
 
 class BrowseContainer extends React.Component

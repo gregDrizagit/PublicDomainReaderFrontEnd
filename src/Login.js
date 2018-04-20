@@ -2,7 +2,7 @@ import React from 'react'
 import Adapter from './adapter'
 import logo from './images/logo.png'
 
-import { Grid, Image, Button, Segment, Container, Header, Input, Icon } from 'semantic-ui-react'
+import { Image, Button, Segment, Container, Header, Input } from 'semantic-ui-react'
 
 class Login extends React.Component{
 

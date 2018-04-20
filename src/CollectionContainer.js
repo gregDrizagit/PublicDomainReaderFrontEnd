@@ -3,7 +3,7 @@ import CollectionShow from './CollectionShow'
 import CollectionCard from './CollectionCard'
 
 import Adapter from './adapter'
-import { Grid, Image, Button, Segment, Container, Card, Input, Icon } from 'semantic-ui-react'
+import { Button, Card, Input} from 'semantic-ui-react'
 
 class CollectionContainer extends React.Component
 {

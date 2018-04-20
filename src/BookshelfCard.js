@@ -1,7 +1,5 @@
 import React from 'react'
-import BookCard from './BookCard'
-import CategoryShow from './CategoryShow'
-import { Grid, Image, Button, Icon, Segment, Card, Container, Input, Menu } from 'semantic-ui-react'
+import { Button, Card } from 'semantic-ui-react'
 
 class BookshelfCard extends React.Component
 {

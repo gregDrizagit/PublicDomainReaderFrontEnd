@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Image, Button, Segment, Loader, Header, Sidebar, Divider, Icon, Container,Popup, Menu, Label } from 'semantic-ui-react'
+import { Image, Button, Segment, Header } from 'semantic-ui-react'
 import logo from './images/logo.png'
 
   const NavBar = (props) =>

@@ -1,11 +1,10 @@
 import React from 'react'
-import BookCard from './AuthorCard'
-import {Card, Segment, Dropdown, Menu, Button ,Icon, Image, Label, Loader} from 'semantic-ui-react'
+import {Card, Button} from 'semantic-ui-react'
 
 class AuthorCard extends React.Component
 {
   ///Each author card is going to render on click the authors detail
-  //We didn't get much data for the author, so we can render his name, birth and death year, and hist list of books
+  //We didn't get much data for the author, so we can render his name, birth and death year, and his list of books
   //I'm thinking that the list of books can maybe exist in a drop down from each author card
   //We will be rendering book cards in the drop down, so we should have all of the same functionality that we would have anywhere else
 

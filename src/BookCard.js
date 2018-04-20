@@ -1,7 +1,6 @@
 import React from 'react'
 import Adapter from './adapter'
-import BookDetail from './BookDetail'
-import {Card, Segment, Dropdown, Menu, Button ,Icon, Image, Label, Loader} from 'semantic-ui-react'
+import {Card, Segment, Dropdown, Button, Image} from 'semantic-ui-react'
 import cover1 from './images/cover-1.jpg'
 import cover2 from './images/cover-2.jpg'
 import cover3 from './images/cover-3.jpg'

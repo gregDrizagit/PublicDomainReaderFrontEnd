@@ -6,9 +6,8 @@ import AuthorCard from './AuthorCard'
 import BookshelfCard from './BookshelfCard'
 import CategoryModal from './CategoryModal'
 import NavBar from './NavBar'
-import logo from './images/logo.png'
 
-import { Grid, Image, Button, Segment, Input, Container, Icon, Card, Loader, Header, Dimmer } from 'semantic-ui-react'
+import { Button, Segment, Input, Container, Icon, Card, Loader } from 'semantic-ui-react'
 
 
 class Search extends React.Component

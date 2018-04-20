@@ -1,7 +1,7 @@
 import React from 'react'
 import Adapter from './adapter'
 
-import { Grid, Image, Button, Segment, Loader, Header, Sidebar, Divider, Feed, Icon, Container,Popup, Menu, Label } from 'semantic-ui-react'
+import {Feed} from 'semantic-ui-react'
 
   const UserCard = (props) =>
   {

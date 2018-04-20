@@ -1,16 +1,10 @@
 import React from 'react'
 import Adapter from './adapter'
-import BookCard from './BookCard'
-import AuthorCard from './AuthorCard'
-import SubjectCard from './SubjectCard'
 import BrowseContainer from './BrowseContainer'
-import CategoryShow from './CategoryShow'
 import CategoryModal from './CategoryModal'
-import InfiniteScroll from 'react-infinite-scroll-component';
 import NavBar from './NavBar'
-import logo from './images/logo.png'
 
-import { Grid, Image, Button, Icon, Segment, Sidebar, Header, Card, Container, Input, Menu } from 'semantic-ui-react'
+import { Container } from 'semantic-ui-react'
 
 class Browse extends React.Component
 {

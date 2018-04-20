@@ -1,7 +1,6 @@
 import React from 'react'
-import { Grid, Image, Button, Icon, Segment, Card, Container, Input, Label } from 'semantic-ui-react'
+import { Button, Card } from 'semantic-ui-react'
 import BookCard from './BookCard'
-import Adapter from './adapter'
 class CollectionCard extends React.Component
 {
   constructor()
